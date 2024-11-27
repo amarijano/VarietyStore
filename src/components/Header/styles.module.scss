@@ -1,0 +1,23 @@
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #0c8512;
+}
+
+.logoButton {
+  font-size: 24px;
+  color: white;
+}
+
+.headerSearch,
+.headerLogo,
+.headerMenu {
+  flex: 0 0 33.33%;
+  line-height: normal;
+}
+
+.headerMenu {
+  justify-content: flex-end;
+}
