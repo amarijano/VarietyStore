@@ -1,3 +1,5 @@
+import { LoginPage } from "../../pages";
+
 export enum AppRoute {
   BASE = "/",
   LOGIN = "/login",
@@ -15,7 +17,7 @@ export function AppRoutes() {
     {
       path: AppRoute.LOGIN,
       title: "Login",
-      element: <div>Login</div>,
+      element: <LoginPage />,
     },
     {
       path: AppRoute.CART,

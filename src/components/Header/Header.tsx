@@ -33,7 +33,12 @@ function Header() {
       <Search className={styles.headerSearch} />
       <Space className={styles.headerMenu}>
         <HeaderProfile />
-        <Button onClick={handleCartClick}>
+        <Button
+          className={styles.cartButton}
+          type="text"
+          size="large"
+          onClick={handleCartClick}
+        >
           <ShoppingCartOutlined />
         </Button>
       </Space>
