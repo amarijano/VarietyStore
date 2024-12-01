@@ -6,9 +6,11 @@ import { AppRoute } from "../../router/data/routes";
 import { Button, Space } from "antd";
 import { Search } from "..";
 import styles from "./styles.module.scss";
+import { useProducts } from "../../hooks/useProducts";
 
 function Header() {
   const navigate = useNavigate();
+  const { search } = useProducts();
 
   const handleLogoClick = () => {
     navigate(AppRoute.BASE, { replace: true });
@@ -30,7 +32,12 @@ function Header() {
           Variety shop
         </Button>
       </div>
-      <Search className={styles.headerSearch} />
+      <Search
+        className={styles.headerSearch}
+        defaultValue={search.query || ""}
+        onSearch={(value: string) => search.executeSearch(value)}
+        onClear={search.clearSearch}
+      />
       <Space className={styles.headerMenu}>
         <HeaderProfile />
         <Button
