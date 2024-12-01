@@ -1,0 +1,32 @@
+.userButtonContainer {
+  &:hover {
+    .userButton,
+    .userText {
+      color: red !important;
+    }
+  }
+}
+
+.userButton {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  color: white;
+  padding: 0;
+  transition: color 0.2s;
+
+  svg {
+    font-size: 20px;
+  }
+}
+
+.userText {
+  font-size: 12px;
+  color: white;
+  transition: color 0.2s;
+}
+
+.headerAvatar {
+  cursor: pointer;
+}
