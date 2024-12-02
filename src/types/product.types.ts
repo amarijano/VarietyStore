@@ -53,3 +53,11 @@ interface ApiPaginationResponse {
 export interface GetProductsResponse extends ApiPaginationResponse {
   products: Product[];
 }
+
+export type SortField = "title" | "price";
+export type SortOrder = "asc" | "desc";
+
+export interface SortConfig {
+  field: SortField;
+  order: SortOrder;
+}

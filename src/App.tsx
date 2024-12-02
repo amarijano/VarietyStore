@@ -13,7 +13,7 @@ function App() {
     <ModalProvider>
       <Layout className={styles.layout}>
         <Header />
-        <Content>{routesElement}</Content>
+        <Content className={styles.content}>{routesElement}</Content>
       </Layout>
     </ModalProvider>
   );

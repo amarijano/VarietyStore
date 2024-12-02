@@ -13,7 +13,7 @@ function Header() {
   const { search } = useProducts();
 
   const handleLogoClick = () => {
-    navigate(AppRoute.BASE, { replace: true });
+    navigate(AppRoute.BASE);
   };
 
   const handleCartClick = () => {
@@ -34,7 +34,7 @@ function Header() {
       </div>
       <Search
         className={styles.headerSearch}
-        defaultValue={search.query || ""}
+        value={search.query || undefined}
         onSearch={(value: string) => search.executeSearch(value)}
         onClear={search.clearSearch}
       />

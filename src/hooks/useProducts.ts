@@ -1,6 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "./useAuth";
-import { GetProductsResponse, Product } from "../types/product.types";
+import {
+  GetProductsResponse,
+  Product,
+  SortConfig,
+  SortField,
+  SortOrder,
+} from "../types/product.types";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 interface UseProductResult {
@@ -19,6 +25,15 @@ interface UseProductResult {
     executeSearch: (query: string) => void;
     clearSearch: () => void;
   };
+  sort: {
+    field: SortField | null;
+    order: SortOrder | null;
+    updateSort: (field: SortField, order: SortOrder) => void;
+  };
+  filter: {
+    category: string | null;
+    updateCategory: (category: string | null) => void;
+  };
 }
 
 export function useProducts(): UseProductResult {
@@ -30,6 +45,9 @@ export function useProducts(): UseProductResult {
   const searchQuery = searchParams.get("q");
   const currentPage = Number(searchParams.get("page")) || 1;
   const pageSize = Number(searchParams.get("limit")) || 20;
+  const sortField = searchParams.get("sortBy") as SortField | null;
+  const sortOrder = searchParams.get("order") as SortOrder | null;
+  const category = searchParams.get("category");
 
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
@@ -44,7 +62,15 @@ export function useProducts(): UseProductResult {
 
   const { fetchWithAutoRefresh } = useAuth();
 
-  const fetchProducts = async (page: number, limit: number, query?: string) => {
+  const fetchProducts = async (
+    page: number,
+    limit: number,
+    options?: {
+      query?: string;
+      sort?: SortConfig;
+      category?: string;
+    }
+  ) => {
     // Generate unique request ID
     const requestId = Date.now().toString();
     currentRequestId.current = requestId;
@@ -52,9 +78,15 @@ export function useProducts(): UseProductResult {
     setError(null);
     try {
       const skip = (page - 1) * limit;
-      const url = query
-        ? `/api/products/search?q=${encodeURIComponent(query)}&limit=${limit}&skip=${skip}`
-        : `/api/products?limit=${limit}&skip=${skip}`;
+      let url = options?.query
+        ? `/api/products/search?q=${encodeURIComponent(options?.query)}&limit=${limit}&skip=${skip}`
+        : options?.category
+          ? `/api/products/category/${options?.category}?limit=${limit}&skip=${skip}`
+          : `/api/products?limit=${limit}&skip=${skip}`;
+
+      if (options?.sort) {
+        url += `&sortBy=${options.sort.field}&order=${options.sort.order}`;
+      }
 
       const response = await fetchWithAutoRefresh(url);
 
@@ -85,14 +117,45 @@ export function useProducts(): UseProductResult {
       isInitialMount.current = false;
       return;
     }
+
+    const sortConfig =
+      sortField && sortOrder
+        ? { field: sortField, order: sortOrder }
+        : undefined;
+
     if (isSearchRoute && searchQuery) {
-      fetchProducts(currentPage, pageSize, searchQuery);
+      fetchProducts(currentPage, pageSize, {
+        query: searchQuery,
+        sort: sortConfig,
+      });
     } else if (isSearchRoute && !searchQuery) {
       navigate("/products");
     } else {
-      fetchProducts(currentPage, pageSize);
+      fetchProducts(currentPage, pageSize, {
+        sort: sortConfig,
+        category: category || undefined,
+      });
     }
-  }, [isSearchRoute, searchQuery, currentPage, pageSize]);
+  }, [
+    isSearchRoute,
+    searchQuery,
+    currentPage,
+    pageSize,
+    sortField,
+    sortOrder,
+    category,
+  ]);
+
+  const updateCategory = (newCategory: string | null) => {
+    const newParams = new URLSearchParams(searchParams);
+    if (newCategory) {
+      newParams.set("category", newCategory);
+    } else {
+      newParams.delete("category");
+    }
+    newParams.set("page", "1"); // Reset to first page
+    setSearchParams(newParams);
+  };
 
   const goToPage = (page: number) => {
     const newParams = new URLSearchParams(searchParams);
@@ -110,15 +173,27 @@ export function useProducts(): UseProductResult {
   const executeSearch = (query: string) => {
     navigate({
       pathname: "/products/search",
-      search: `?q=${encodeURIComponent(query)}&page=1&limit=${pageSize}`,
+      search: `?q=${encodeURIComponent(query)}&page=1&limit=${pageSize}${
+        sortField && sortOrder ? `&sortBy=${sortField}&order=${sortOrder}` : ""
+      }`,
     });
   };
 
   const clearSearch = () => {
     navigate({
       pathname: "/products",
-      search: `?page=1&limit=${pageSize}`,
+      search: `?page=1&limit=${pageSize}${
+        sortField && sortOrder ? `&sortBy=${sortField}&order=${sortOrder}` : ""
+      }`,
     });
+  };
+
+  const updateSort = (field: SortField, order: SortOrder) => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set("sortBy", field);
+    newParams.set("order", order);
+    newParams.set("page", "1"); // Reset to first page when sorting changes
+    setSearchParams(newParams);
   };
 
   return {
@@ -136,6 +211,15 @@ export function useProducts(): UseProductResult {
       query: searchQuery,
       executeSearch,
       clearSearch,
+    },
+    sort: {
+      field: sortField,
+      order: sortOrder,
+      updateSort,
+    },
+    filter: {
+      category,
+      updateCategory,
     },
   };
 }

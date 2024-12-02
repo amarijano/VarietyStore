@@ -3,11 +3,11 @@ import { Input } from "antd";
 export interface SearchProps {
   onSearch: (value: string) => void;
   onClear: () => void;
-  defaultValue?: string;
+  value?: string;
   className?: string;
 }
 
-function Search({ className, defaultValue, onSearch, onClear }: SearchProps) {
+function Search({ className, onSearch, onClear, value }: SearchProps) {
   const { Search } = Input;
 
   return (
@@ -15,7 +15,7 @@ function Search({ className, defaultValue, onSearch, onClear }: SearchProps) {
       <Search
         placeholder="Search for products"
         allowClear
-        defaultValue={defaultValue}
+        value={value}
         onSearch={onSearch}
         onChange={(event) => console.log(event.target.value)}
         onClear={onClear}
