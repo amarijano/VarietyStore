@@ -8,3 +8,4 @@ export { default as SkeletonCard } from "./SkeletonCard/SkeletonCard";
 export { default as ProductDetailsModal } from "./ProductDetailsModal/ProductDetailsModal";
 export { default as Price } from "./Price/Price";
 export { default as ImageDisplay } from "./ImageDisplay/ImageDisplay";
+export { default as HeaderButton } from "./HeaderButton/HeaderButton";

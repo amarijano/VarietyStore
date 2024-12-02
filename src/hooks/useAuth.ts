@@ -42,13 +42,15 @@ export function useAuth() {
       }
 
       const data: LoginResponse = await response.json();
-      Object.entries(data).forEach(([key, value]) => {
-        if (value != null) {
-          localStorage.setItem(key, JSON.stringify(value));
-        }
-      });
+      // Save access token separately for easy access
+      localStorage.setItem("accessToken", data.accessToken);
+
+      // Save all user data under the "user" key
+      const { accessToken, ...userData } = data; // Destructure to separate access token
+      localStorage.setItem("user", JSON.stringify(userData));
       setIsLoggedIn(true);
       window.dispatchEvent(authStateEvent);
+      window.dispatchEvent(new Event("cartUpdate"));
       return data;
     } catch (error) {
       console.error("Login error:", error);
@@ -79,9 +81,11 @@ export function useAuth() {
   };
 
   const logout = () => {
-    localStorage.clear();
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("user");
     setIsLoggedIn(false);
     window.dispatchEvent(authStateEvent);
+    window.dispatchEvent(new Event("cartUpdate"));
   };
 
   const fetchWithAutoRefresh = async (

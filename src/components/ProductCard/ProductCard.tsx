@@ -15,6 +15,37 @@ function ProductCard({ product, loading }: ProductCardProps) {
   const { Meta } = Card;
   const { showModal } = useModal();
 
+  const addToCart = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    // Get user data if it exists
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    const userId = user.id || null;
+
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+    // Check if product already exists in cart
+    const existingProductIndex = cart.findIndex(
+      (item: { id: number; userId: number | null }) =>
+        item.id === product.id && item.userId === userId
+    );
+
+    if (existingProductIndex !== -1) {
+      // If product exists, increment quantity
+      cart[existingProductIndex].quantity += 1;
+    } else {
+      // If product doesn't exist, add it with quantity 1
+      cart.push({
+        id: product.id,
+        quantity: 1,
+        userId: userId,
+      });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    window.dispatchEvent(new Event("cartUpdate"));
+    console.log("Product added to cart:", cart);
+  };
+
   return (
     <>
       <Card
@@ -36,6 +67,7 @@ function ProductCard({ product, loading }: ProductCardProps) {
                 <Button onClick={() => showModal("productDetails", product)}>
                   Show Details
                 </Button>,
+                <Button onClick={addToCart}>Add to Cart</Button>,
               ]
         }
         onClick={() => showModal("productDetails", product)}

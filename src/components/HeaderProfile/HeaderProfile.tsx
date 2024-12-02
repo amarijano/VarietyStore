@@ -4,10 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { AppRoute } from "../../router/data/routes";
 import { useAuth } from "../../hooks/useAuth";
 import styles from "./styles.module.scss";
+import HeaderButton from "../HeaderButton/HeaderButton";
 
 function HeaderProfile() {
   const { isLoggedIn, logout } = useAuth();
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   const handleLoginClick = () => {
     navigate(AppRoute.LOGIN);
@@ -33,29 +35,31 @@ function HeaderProfile() {
   return isLoggedIn ? (
     <Dropdown menu={{ items: loggedInItems }} trigger={["click"]}>
       <Tooltip
-        title={`${localStorage.getItem("firstName")?.replace(/"/g, "")} ${localStorage.getItem("lastName")?.replace(/"/g, "")}`}
+        title={`${user.firstName} ${user.lastName}`}
         placement="left"
         color="grey"
         arrow={false}
       >
-        <Avatar
-          className={styles.headerAvatar}
-          src={localStorage.getItem("image")?.replace(/"/g, "")}
-        />
+        <Avatar className={styles.headerAvatar} src={user.image} />
       </Tooltip>
     </Dropdown>
   ) : (
-    <div className={styles.userButtonContainer}>
-      <Button
-        className={styles.userButton}
-        type="link"
-        icon={<UserOutlined />}
-        size="large"
-        onClick={handleLoginClick}
-      >
-        <span className={styles.userText}>USER</span>
-      </Button>
-    </div>
+    // <div className={styles.userButtonContainer}>
+    //   <Button
+    //     className={styles.userButton}
+    //     type="link"
+    //     icon={<UserOutlined />}
+    //     size="large"
+    //     onClick={handleLoginClick}
+    //   >
+    //     <span className={styles.userText}>USER</span>
+    //   </Button>
+    // </div>
+    <HeaderButton
+      icon={<UserOutlined />}
+      onClick={handleLoginClick}
+      text="USER"
+    />
   );
 }
 

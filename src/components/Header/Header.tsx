@@ -1,16 +1,18 @@
 import { Header as HeaderComponent } from "antd/es/layout/layout";
-import { HeaderProfile } from "..";
+import { HeaderButton, HeaderProfile } from "..";
 import { useNavigate } from "react-router-dom";
 import { ShoppingCartOutlined, ShopTwoTone } from "@ant-design/icons";
 import { AppRoute } from "../../router/data/routes";
-import { Button, Space } from "antd";
+import { Badge, Button, Space } from "antd";
 import { Search } from "..";
 import styles from "./styles.module.scss";
 import { useProducts } from "../../hooks/useProducts";
+import { useCart } from "../../hooks/useCart";
 
 function Header() {
   const navigate = useNavigate();
   const { search } = useProducts();
+  const cartCount = useCart();
 
   const handleLogoClick = () => {
     navigate(AppRoute.BASE);
@@ -40,14 +42,13 @@ function Header() {
       />
       <Space className={styles.headerMenu}>
         <HeaderProfile />
-        <Button
-          className={styles.cartButton}
-          type="text"
-          size="large"
-          onClick={handleCartClick}
-        >
-          <ShoppingCartOutlined />
-        </Button>
+        <Badge count={cartCount} size="small">
+          <HeaderButton
+            icon={<ShoppingCartOutlined />}
+            onClick={handleCartClick}
+            text="CART"
+          />
+        </Badge>
       </Space>
     </HeaderComponent>
   );
