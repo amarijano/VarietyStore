@@ -1,18 +1,24 @@
-import { LoginPage } from "../../pages";
+import { Navigate } from "react-router-dom";
+import { ProductsView, LoginPage } from "../../pages";
 
 export enum AppRoute {
-  BASE = "/",
+  ROOT = "/",
+  BASE = "/products",
   LOGIN = "/login",
-  LOGOUT = "/logout",
   CART = "/cart",
+  SEARCH = "/products/search",
 }
 
 export function AppRoutes() {
   return [
     {
+      path: AppRoute.ROOT,
+      element: <Navigate to={AppRoute.BASE} replace />,
+    },
+    {
       path: AppRoute.BASE,
       title: "Home",
-      element: <div>Catalog Page</div>,
+      element: <ProductsView />,
     },
     {
       path: AppRoute.LOGIN,
@@ -23,6 +29,11 @@ export function AppRoutes() {
       path: AppRoute.CART,
       title: "Cart",
       element: <div>Cart</div>,
+    },
+    {
+      path: AppRoute.SEARCH,
+      title: "Search",
+      element: <ProductsView />,
     },
     {
       path: "*",

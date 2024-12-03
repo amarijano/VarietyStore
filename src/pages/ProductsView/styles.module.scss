@@ -1,0 +1,21 @@
+.homePageContainer {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  min-height: 100%;
+
+  [class~="ant-float-btn"] {
+    left: 25px;
+    bottom: 68px;
+  }
+}
+
+.homePageContent {
+  flex: 1;
+}
+
+.controls {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: flex-end;
+}

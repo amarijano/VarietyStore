@@ -1,0 +1,53 @@
+.carouselContainer {
+  height: 100%;
+}
+
+[class~="ant-carousel"] {
+  height: 100%;
+  width: 100%;
+
+  [class~="slick-arrow"] {
+    color: grey;
+  }
+
+  [class~="slick-dots"] {
+    li button {
+      background: grey;
+    }
+
+    li[class~="slick-active"] button {
+      background: black;
+    }
+  }
+
+  [class~="slick-dots-bottom"] {
+    bottom: -6px;
+  }
+
+  [class~="slick-list"] {
+    height: 100%;
+    margin: 24px;
+    > div {
+      height: 100%;
+      > div {
+        > div {
+          height: 100%;
+          > div {
+            height: 100%;
+            img {
+              height: 100%;
+              width: 100%;
+              object-fit: contain;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.singleImage {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}

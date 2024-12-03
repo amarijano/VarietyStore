@@ -1,0 +1,54 @@
+.productCard {
+  // Tablet (minimum 768px)
+  @media (min-width: 768px) {
+    max-width: 220px;
+  }
+
+  // Small desktop (minimum 1024px)
+  @media (min-width: 1024px) {
+    max-width: 240px;
+  }
+
+  // Large desktop (minimum 1440px)
+  @media (min-width: 1440px) {
+    max-width: 260px;
+  }
+
+  [class~="ant-card-cover"] {
+    text-align: center;
+    margin: 12px;
+  }
+}
+
+.cardTitle {
+  min-height: 2.7em;
+  line-height: 1.3;
+  white-space: normal;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.skeletonImage {
+  width: 100% !important;
+  height: 240px !important;
+}
+
+.cardDescription {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.productPrice {
+  font-weight: bold;
+}
+
+.productCardCover {
+  height: 240px;
+  justify-items: center;
+  > img {
+    height: inherit;
+  }
+}
