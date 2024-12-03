@@ -1,10 +1,11 @@
-import { useRoutes } from "react-router-dom";
-import { AppRoutes } from "./router/data/routes";
 import { Layout } from "antd";
-import { Header } from "./components";
+import { useRoutes } from "react-router-dom";
+
 import styles from "./App.styles.module.scss";
-import { ModalProvider } from "./components/GlobalModal/ModalContext";
+import { Header } from "./components";
+import { ModalProvider } from "./context/ModalContext";
 import { ProductsProvider } from "./context/ProductsContext";
+import { AppRoutes } from "./router/data/routes";
 
 function App() {
   const routesElement = useRoutes(AppRoutes());

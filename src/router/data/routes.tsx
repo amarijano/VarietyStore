@@ -1,13 +1,7 @@
 import { Navigate } from "react-router-dom";
-import { ProductsView, LoginPage } from "../../pages";
 
-export enum AppRoute {
-  ROOT = "/",
-  BASE = "/products",
-  LOGIN = "/login",
-  CART = "/cart",
-  SEARCH = "/products/search",
-}
+import { AppRoute } from "../../constants/constants";
+import { LoginPage, ProductsView } from "../../pages";
 
 export function AppRoutes() {
   return [

@@ -1,9 +1,10 @@
 import { Button, Modal } from "antd";
+
+import { ImageMode } from "../../constants/constants";
 import { Product } from "../../types/product.types";
+import { Price } from "..";
 import ImageDisplay from "../ImageDisplay/ImageDisplay";
 import styles from "./styles.module.scss";
-import { Price } from "..";
-import { ImageMode } from "../../constants/constants";
 
 interface ProductDetailsModalProps {
   product: Product;

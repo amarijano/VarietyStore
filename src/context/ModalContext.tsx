@@ -1,18 +1,14 @@
-import { createContext, useContext, ReactNode, useState } from "react";
-import { Product } from "../../types/product.types";
-import ProductDetailsModal from "../ProductDetailsModal/ProductDetailsModal";
+import { createContext, ReactNode, useContext, useState } from "react";
+
+import ProductDetailsModal from "../components/ProductDetailsModal/ProductDetailsModal";
+import { Product } from "../types/product.types";
 
 interface ProductDetailsModalConfig {
   type: "productDetails";
   data: Product;
 }
 
-interface LoginFormModalConfig {
-  type: "loginForm";
-  data?: undefined; // TODO
-}
-
-type ModalConfig = ProductDetailsModalConfig | LoginFormModalConfig;
+type ModalConfig = ProductDetailsModalConfig;
 
 interface ModalContextType {
   showModal: <T extends ModalConfig["type"]>(
@@ -53,14 +49,6 @@ export function ModalProvider({ children }: { children: ReactNode }) {
             }}
             onCancel={hideModal}
           />
-        );
-      case "loginForm":
-        return (
-          <>Modal</>
-          /* <LoginFormModal
-            visible={isModalVisible}
-            onCancel={hideModal}
-          /> */
         );
       default:
         return null;

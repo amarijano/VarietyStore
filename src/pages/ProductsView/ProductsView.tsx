@@ -1,8 +1,6 @@
 import { FloatButton, InputNumber, Pagination, Select, Space } from "antd";
-import { useProductsData } from "../../hooks/useProductsData";
-import styles from "./styles.module.scss";
+
 import { FilterChip, ProductGrid } from "../../components";
-import { useProductsContext } from "../../context/ProductsContext";
 import {
   ALL_CATEGORIES_VALUE,
   FilterTypes,
@@ -11,6 +9,9 @@ import {
   SortOrder,
   VALID_PAGE_SIZES,
 } from "../../constants/constants";
+import { useProductsContext } from "../../context/ProductsContext";
+import { useProductsData } from "../../hooks/useProductsData";
+import styles from "./styles.module.scss";
 
 function ProductsView() {
   const {

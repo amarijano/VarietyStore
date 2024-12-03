@@ -1,10 +1,11 @@
 import { UserOutlined } from "@ant-design/icons";
-import { Button, Avatar, MenuProps, Dropdown, Tooltip } from "antd";
+import { Avatar, Button, Dropdown, MenuProps, Tooltip } from "antd";
 import { useNavigate } from "react-router-dom";
-import { AppRoute } from "../../router/data/routes";
+
+import { AppRoute } from "../../constants/constants";
 import { useAuth } from "../../hooks/useAuth";
-import styles from "./styles.module.scss";
 import HeaderButton from "../HeaderButton/HeaderButton";
+import styles from "./styles.module.scss";
 
 function HeaderProfile() {
   const { isLoggedIn, logout } = useAuth();
