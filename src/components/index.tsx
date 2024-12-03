@@ -9,3 +9,4 @@ export { default as ProductDetailsModal } from "./ProductDetailsModal/ProductDet
 export { default as Price } from "./Price/Price";
 export { default as ImageDisplay } from "./ImageDisplay/ImageDisplay";
 export { default as HeaderButton } from "./HeaderButton/HeaderButton";
+export { default as FilterChip } from "./FilterChip/FilterChip";

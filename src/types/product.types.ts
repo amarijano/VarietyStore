@@ -1,3 +1,5 @@
+import { SortOrder, SortField } from "../constants/constants";
+
 export interface Product {
   id: number;
   title: string;
@@ -54,10 +56,37 @@ export interface GetProductsResponse extends ApiPaginationResponse {
   products: Product[];
 }
 
-export type SortField = "title" | "price";
-export type SortOrder = "asc" | "desc";
-
 export interface SortConfig {
   field: SortField;
   order: SortOrder;
+}
+
+export interface CategoryType {
+  name: string;
+  slug: string;
+  url: string;
+}
+
+export interface ProductsContextType {
+  allProducts: Product[];
+  categories: CategoryType[];
+  loading: boolean;
+  categoriesLoading: boolean;
+  error: Error | null;
+}
+
+export interface PriceRange {
+  min: number | null;
+  max: number | null;
+}
+
+export interface Filters {
+  category: string | null;
+  priceRange: PriceRange;
+  search: string | null;
+}
+
+export interface Pagination {
+  page: number;
+  limit: number;
 }
