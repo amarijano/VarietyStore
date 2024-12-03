@@ -1,4 +1,4 @@
-import { SortOrder, SortField } from "../constants/constants";
+import { SortField, SortOrder } from "../constants/constants";
 
 export interface Product {
   id: number;

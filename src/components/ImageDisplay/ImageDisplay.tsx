@@ -1,6 +1,7 @@
 import { Carousel } from "antd";
-import styles from "./styles.module.scss";
+
 import { ImageMode } from "../../constants/constants";
+import styles from "./styles.module.scss";
 
 interface ImageDisplayProps {
   images: string[];

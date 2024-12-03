@@ -16,6 +16,14 @@ export enum Currency {
   KRW = "₩", // South Korean Won
 }
 
+export enum AppRoute {
+  ROOT = "/",
+  BASE = "/products",
+  LOGIN = "/login",
+  CART = "/cart",
+  SEARCH = "/products/search",
+}
+
 export enum ModalType {
   PRODUCT_DETAILS = "productDetails",
 }

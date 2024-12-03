@@ -1,5 +1,5 @@
-import { Product, Filters } from "../types/product.types";
 import { SortField, SortOrder } from "../constants/constants";
+import { Filters, Product } from "../types/product.types";
 /**
  * Applies all filters (category, price range, search) to the product list
  * @param products - The full list of products to filter

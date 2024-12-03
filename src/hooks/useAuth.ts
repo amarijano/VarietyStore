@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+
 import {
   LoginCredentials,
   LoginResponse,
@@ -42,11 +43,11 @@ export function useAuth() {
       }
 
       const data: LoginResponse = await response.json();
-      // Save access token separately for easy access
-      localStorage.setItem("accessToken", data.accessToken);
 
       // Save all user data under the "user" key
       const { accessToken, ...userData } = data; // Destructure to separate access token
+      // Save access token separately for easy access
+      localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("user", JSON.stringify(userData));
       setIsLoggedIn(true);
       window.dispatchEvent(authStateEvent);

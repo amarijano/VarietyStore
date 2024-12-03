@@ -1,11 +1,12 @@
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input, message, Typography } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import styles from "./styles.module.scss";
-import { useAuth } from "../../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
-import { AppRoute } from "../../router/data/routes";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { AppRoute } from "../../constants/constants";
+import { useAuth } from "../../hooks/useAuth";
 import { LoginCredentials } from "../../types/auth.types";
+import styles from "./styles.module.scss";
 
 function LoginPage() {
   const { login } = useAuth();

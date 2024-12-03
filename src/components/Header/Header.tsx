@@ -1,12 +1,13 @@
-import { Header as HeaderComponent } from "antd/es/layout/layout";
-import { HeaderButton, HeaderProfile } from "..";
-import { useNavigate, useSearchParams } from "react-router-dom";
 import { ShoppingCartOutlined, ShopTwoTone } from "@ant-design/icons";
-import { AppRoute } from "../../router/data/routes";
 import { Badge, Button, Input, Space } from "antd";
-import styles from "./styles.module.scss";
-import { useCart } from "../../hooks/useCart";
+import { Header as HeaderComponent } from "antd/es/layout/layout";
 import { useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+
+import { AppRoute } from "../../constants/constants";
+import { useCart } from "../../hooks/useCart";
+import { HeaderButton, HeaderProfile } from "..";
+import styles from "./styles.module.scss";
 
 function Header() {
   const navigate = useNavigate();

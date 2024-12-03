@@ -1,7 +1,7 @@
 import { Input } from "antd";
 
 export interface SearchProps {
-  onSearch: (value: string) => void;
+  onSearch: () => void;
   onClear: () => void;
   value?: string;
   className?: string;

@@ -1,16 +1,17 @@
 import {
   createContext,
-  useContext,
   ReactNode,
-  useState,
+  useContext,
   useEffect,
+  useState,
 } from "react";
+
+import { useAuth } from "../hooks/useAuth";
 import {
   CategoryType,
   Product,
   ProductsContextType,
 } from "../types/product.types";
-import { useAuth } from "../hooks/useAuth";
 
 const ProductsContext = createContext<ProductsContextType | null>(null);
 

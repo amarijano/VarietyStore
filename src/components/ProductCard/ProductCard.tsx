@@ -1,10 +1,12 @@
 import { Button, Card, Skeleton } from "antd";
-import { Product } from "../../types/product.types";
-import styles from "./styles.module.scss";
-import ImageDisplay from "../ImageDisplay/ImageDisplay";
-import { Price } from "..";
-import { useModal } from "../GlobalModal/ModalContext";
+import React from "react";
+
 import { ImageMode } from "../../constants/constants";
+import { useModal } from "../../context/ModalContext";
+import { Product } from "../../types/product.types";
+import { Price } from "..";
+import ImageDisplay from "../ImageDisplay/ImageDisplay";
+import styles from "./styles.module.scss";
 
 interface ProductCardProps {
   product: Product;
@@ -55,7 +57,6 @@ function ProductCard({ product, loading }: ProductCardProps) {
           loading ? (
             <Skeleton.Image className={styles.skeletonImage} />
           ) : (
-            //   <img src={product.images[0]} />
             <ImageDisplay images={product.images} mode={ImageMode.SINGLE} />
           )
         }
@@ -64,10 +65,15 @@ function ProductCard({ product, loading }: ProductCardProps) {
           loading
             ? []
             : [
-                <Button onClick={() => showModal("productDetails", product)}>
+                <Button
+                  key="showDetails"
+                  onClick={() => showModal("productDetails", product)}
+                >
                   Show Details
                 </Button>,
-                <Button onClick={addToCart}>Add to Cart</Button>,
+                <Button key="addToCart" onClick={addToCart}>
+                  Add to Cart
+                </Button>,
               ]
         }
         onClick={() => showModal("productDetails", product)}

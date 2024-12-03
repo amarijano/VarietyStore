@@ -1,21 +1,22 @@
-import { useMemo, useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useProductsContext } from "../context/ProductsContext";
-import {
-  applyFilters,
-  sortProducts,
-  paginateProducts,
-  validateUrlParams,
-  updateFilterParams,
-  updateSortParams,
-  updatePaginationParams,
-} from "../utils/useProductHookUtils";
-import { Filters } from "../types/product.types";
+
 import {
   DEFAULT_PAGE_SIZE,
   SortField,
   SortOrder,
 } from "../constants/constants";
+import { useProductsContext } from "../context/ProductsContext";
+import { Filters } from "../types/product.types";
+import {
+  applyFilters,
+  paginateProducts,
+  sortProducts,
+  updateFilterParams,
+  updatePaginationParams,
+  updateSortParams,
+  validateUrlParams,
+} from "../utils/useProductHookUtils";
 
 export function useProductsData() {
   const { allProducts, loading, error } = useProductsContext();
