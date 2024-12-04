@@ -5,6 +5,7 @@ import { Product } from "../types/product.types";
 
 interface ProductDetailsModalConfig {
   type: "productDetails";
+  onOk: (product: Product) => void;
   data: Product;
 }
 
@@ -13,6 +14,7 @@ type ModalConfig = ProductDetailsModalConfig;
 interface ModalContextType {
   showModal: <T extends ModalConfig["type"]>(
     type: T,
+    onOk: Extract<ModalConfig, { type: T }>["onOk"],
     data?: Extract<ModalConfig, { type: T }>["data"]
   ) => void;
   hideModal: () => void;
@@ -24,8 +26,8 @@ export function ModalProvider({ children }: { children: ReactNode }) {
   const [modalConfig, setModalConfig] = useState<ModalConfig | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const showModal: ModalContextType["showModal"] = (type, data) => {
-    setModalConfig({ type, data } as ModalConfig);
+  const showModal: ModalContextType["showModal"] = (type, onOk, data) => {
+    setModalConfig({ type, onOk, data } as ModalConfig);
     setIsModalVisible(true);
   };
 
@@ -43,10 +45,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
           <ProductDetailsModal
             product={modalConfig.data}
             visible={isModalVisible}
-            onAdd={() => {
-              // Implement add to cart logic
-              hideModal();
-            }}
+            onAdd={modalConfig.onOk}
             onCancel={hideModal}
           />
         );

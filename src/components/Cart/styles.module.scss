@@ -1,0 +1,58 @@
+@use "../../scss/variables.scss" as *;
+
+.cardContainer {
+  padding: 20px;
+  &Empty {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    > button {
+      width: fit-content;
+    }
+  }
+}
+
+.cartContent {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+
+  &Left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    gap: 32px;
+    > ul {
+      list-style-type: none;
+      padding: 0;
+      flex-grow: 1;
+      margin: 0;
+    }
+  }
+}
+
+.cartTitle {
+  font-size: $font-size-xxl;
+}
+
+.cartSummary {
+  max-height: 200px;
+
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cartActionsWrapper {
+  padding-bottom: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

@@ -8,9 +8,8 @@ import HeaderButton from "../HeaderButton/HeaderButton";
 import styles from "./styles.module.scss";
 
 function HeaderProfile() {
-  const { isLoggedIn, logout } = useAuth();
+  const { isLoggedIn, logout, user } = useAuth();
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   const handleLoginClick = () => {
     navigate(AppRoute.LOGIN);
@@ -36,12 +35,12 @@ function HeaderProfile() {
   return isLoggedIn ? (
     <Dropdown menu={{ items: loggedInItems }} trigger={["click"]}>
       <Tooltip
-        title={`${user.firstName} ${user.lastName}`}
+        title={`${user?.firstName} ${user?.lastName}`}
         placement="left"
         color="grey"
         arrow={false}
       >
-        <Avatar className={styles.headerAvatar} src={user.image} />
+        <Avatar className={styles.headerAvatar} src={user?.image} />
       </Tooltip>
     </Dropdown>
   ) : (

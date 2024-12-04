@@ -11,7 +11,7 @@ import styles from "./styles.module.scss";
 
 function Header() {
   const navigate = useNavigate();
-  const cartCount = useCart();
+  const { cartCount } = useCart();
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchValue, setSearchValue] = useState("");
 

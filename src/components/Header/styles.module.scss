@@ -1,3 +1,5 @@
+@use "../../scss/variables.scss" as *;
+
 .header {
   width: 100%;
   display: flex;
@@ -7,7 +9,7 @@
 }
 
 .logoButton {
-  font-size: 24px;
+  font-size: $font-size-xl;
   color: white;
 }
 

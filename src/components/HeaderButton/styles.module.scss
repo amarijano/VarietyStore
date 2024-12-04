@@ -1,3 +1,5 @@
+@use "../../scss/variables.scss" as *;
+
 .buttonContainer {
   &:hover {
     .button,
@@ -20,7 +22,7 @@
   }
 
   .buttonText {
-    font-size: 12px;
+    font-size: $font-size-small;
     color: white;
     transition: color 0.2s;
   }

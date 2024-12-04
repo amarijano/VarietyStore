@@ -8,7 +8,7 @@ export interface Product {
   discountPercentage: number;
   rating: number;
   stock: number;
-  brand: string;
+  brand?: string;
   category: string;
   thumbnail: string;
   images: string[];
@@ -23,6 +23,19 @@ export interface Product {
   warrantyInformation: string;
   meta: Meta;
   reviews: Review[];
+}
+
+export interface CartItem extends Product {
+  quantity: number;
+}
+
+export interface CartItemStorage {
+  id: number;
+  quantity: number;
+}
+
+export interface UserCartStorage {
+  [userId: string]: CartItemStorage[];
 }
 
 interface Meta {

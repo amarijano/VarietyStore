@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 
+import { Cart } from "../../components";
 import { AppRoute } from "../../constants/constants";
 import { LoginPage, ProductsView } from "../../pages";
 
@@ -22,7 +23,7 @@ export function AppRoutes() {
     {
       path: AppRoute.CART,
       title: "Cart",
-      element: <div>Cart</div>,
+      element: <Cart />,
     },
     {
       path: AppRoute.SEARCH,

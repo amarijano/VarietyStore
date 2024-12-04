@@ -1,5 +1,9 @@
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Form, Input, message, Typography } from "antd";
+import {
+  ArrowLeftOutlined,
+  LockOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import { Button, Checkbox, Form, Input, message, Typography } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -28,33 +32,57 @@ function LoginPage() {
   };
 
   return (
-    <div className={styles.loginContainer}>
-      <div className={styles.loginCard}>
-        <Typography.Title level={2} className={styles.title}>
-          Login
-        </Typography.Title>
+    <div className={styles.loginFormContainer}>
+      <div>
+        <Button type="text" onClick={() => navigate("/products")}>
+          <ArrowLeftOutlined /> Continue shopping as guest
+        </Button>
+      </div>
 
-        <Form name="login" onFinish={onFinish} layout="vertical" size="large">
-          <Form.Item
-            name="username"
-            rules={[{ required: true, message: "Please input your username!" }]}
-          >
-            <Input prefix={<UserOutlined />} placeholder="Username or Email" />
-          </Form.Item>
+      <div className={styles.loginFormWrapper}>
+        <div className={styles.loginFormCard}>
+          <Typography.Title level={2} className={styles.loginFormTitle}>
+            Login
+          </Typography.Title>
 
-          <Form.Item
-            name="password"
-            rules={[{ required: true, message: "Please input your password!" }]}
-          >
-            <Input.Password prefix={<LockOutlined />} placeholder="Password" />
-          </Form.Item>
+          <Form name="login" onFinish={onFinish} layout="vertical" size="large">
+            <Form.Item
+              name="username"
+              rules={[
+                { required: true, message: "Please input your username!" },
+              ]}
+            >
+              <Input
+                prefix={<UserOutlined />}
+                placeholder="Username or Email"
+              />
+            </Form.Item>
 
-          <Form.Item>
-            <Button type="primary" htmlType="submit" block loading={loading}>
-              Log in
-            </Button>
-          </Form.Item>
-        </Form>
+            <Form.Item
+              name="password"
+              rules={[
+                { required: true, message: "Please input your password!" },
+              ]}
+            >
+              <Input.Password
+                prefix={<LockOutlined />}
+                placeholder="Password"
+              />
+            </Form.Item>
+            <Form.Item>
+              <Checkbox defaultChecked>
+                {" "}
+                Keep items in your cart after logging in
+              </Checkbox>
+            </Form.Item>
+
+            <Form.Item>
+              <Button type="primary" htmlType="submit" block loading={loading}>
+                Log in
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
       </div>
     </div>
   );

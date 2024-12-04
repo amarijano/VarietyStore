@@ -4,12 +4,18 @@ import styles from "./styles.module.scss";
 interface PriceProps {
   amount: number;
   currency?: Currency;
+  isLight?: boolean;
 }
 
-function Price({ amount, currency = Currency.EUR }: PriceProps) {
+function Price({
+  amount,
+  currency = Currency.EUR,
+  isLight = false,
+}: PriceProps) {
   return (
-    <div className={styles.price}>
-      {amount} {currency}
+    <div className={isLight ? styles.priceLight : styles.price}>
+      {amount.toFixed(2)}
+      {currency}
     </div>
   );
 }

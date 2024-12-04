@@ -5,6 +5,9 @@
 //   text-align: center;
 // }
 
+[class~="ant-layout"] {
+  min-height: 100%;
+}
 .content {
   height: 100%;
   padding: 12px 50px;
