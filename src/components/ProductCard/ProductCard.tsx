@@ -1,4 +1,4 @@
-import { Button, Card, Skeleton } from "antd";
+import { Button, Card, Skeleton, Tooltip } from "antd";
 import React from "react";
 
 import { ImageMode } from "../../constants/constants";
@@ -77,15 +77,21 @@ function ProductCard({ product, loading }: ProductCardProps) {
                 <Button key="showDetails" onClick={showProductDetailsModal}>
                   Show Details
                 </Button>,
-                <Button
+                <Tooltip
                   key="addToCart"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    addToCart(product);
-                  }}
+                  title={!product.stock ? "Out of stock" : ""}
+                  arrow={false}
                 >
-                  Add to Cart
-                </Button>,
+                  <Button
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      addToCart(product);
+                    }}
+                    disabled={!product.stock}
+                  >
+                    Add to Cart
+                  </Button>
+                </Tooltip>,
               ]
         }
         onClick={showProductDetailsModal}

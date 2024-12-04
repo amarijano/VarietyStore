@@ -1,3 +1,4 @@
+import { ArrowLeftOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
 
@@ -44,7 +45,7 @@ function Cart() {
                     item={item}
                     onQuantityChange={handleQuantityChange}
                     deleteItem={removeFromCart}
-                    onImageThumbnailClick={() =>
+                    onCartListItemClick={() =>
                       showModal(
                         "productDetails",
                         () => addToCart(convertCartItemToProduct(item)),
@@ -55,7 +56,11 @@ function Cart() {
                 ))}
               </ul>
               <div className={styles.cartActionsWrapper}>
-                <Button type="primary" onClick={() => navigate("/products")}>
+                <Button
+                  type="text"
+                  icon={<ArrowLeftOutlined />}
+                  onClick={() => navigate("/products")}
+                >
                   CONTINUE SHOPPING
                 </Button>
                 <Button type="default" onClick={() => removeFromCart()}>

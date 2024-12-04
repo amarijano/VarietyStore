@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { useModal } from "../context/ModalContext";
 import { useProductsContext } from "../context/ProductsContext";
+import { LoginResponse } from "../types/auth.types";
 import {
   CartItem,
   CartItemStorage,
@@ -45,18 +46,6 @@ export function useCart() {
     return cartItems;
   }
 
-  // const handleQuantityChange = (id: number, quantity: number) => {
-  //   // Example of updating local storage directly (you may want to implement this in your hook)
-  //   const currentCart: CartItemStorage[] = JSON.parse(
-  //     localStorage.getItem("cart") || "[]"
-  //   );
-  //   const updatedCart = currentCart.map((item) =>
-  //     item.id === id ? { ...item, quantity } : item
-  //   );
-  //   localStorage.setItem("cart", JSON.stringify(updatedCart));
-  //   window.dispatchEvent(new Event("cartUpdate")); // Trigger cart update event
-  // };
-
   const handleQuantityChange = (id: number, quantity: number) => {
     const currentCart = getUserCart();
     const updatedCart = currentCart.map((item) =>
@@ -65,22 +54,37 @@ export function useCart() {
 
     saveUserCart(updatedCart);
   };
-
-  const getUserCart = (): CartItemStorage[] => {
-    const userId = user?.id?.toString() || "guest";
+  const getUserCart = (userId?: string): CartItemStorage[] => {
+    userId = userId ?? (user?.id?.toString() || "guest");
     const allCarts = JSON.parse(
       localStorage.getItem("carts") || "{}"
     ) as UserCartStorage;
     return allCarts[userId] || [];
   };
 
-  const saveUserCart = (cartItems: CartItemStorage[]) => {
-    const userId = user?.id?.toString() || "guest";
+  const saveUserCart = (cartItems: CartItemStorage[], userId?: string) => {
+    userId = userId ?? (user?.id?.toString() || "guest");
     const allCarts = JSON.parse(
       localStorage.getItem("carts") || "{}"
     ) as UserCartStorage;
-    allCarts[userId] = cartItems;
-    localStorage.setItem("carts", JSON.stringify(allCarts));
+
+    if (cartItems.length === 0) {
+      // If the cart is empty, remove the user's cart entry
+      delete allCarts[userId];
+    } else {
+      // Otherwise, update the user's cart
+      allCarts[userId] = cartItems;
+    }
+
+    // Check if allCarts is empty
+    if (Object.keys(allCarts).length === 0) {
+      // If empty, remove the entire carts object from localStorage
+      localStorage.removeItem("carts");
+    } else {
+      // Otherwise, save the updated carts object
+      localStorage.setItem("carts", JSON.stringify(allCarts));
+    }
+
     window.dispatchEvent(new Event("cartUpdate"));
   };
 
@@ -109,6 +113,31 @@ export function useCart() {
     saveUserCart(newCart);
   };
 
+  const mergeGuestCart = (user: LoginResponse) => {
+    if (!user) return; // Do nothing if no user
+
+    const guestCart = getUserCart("guest");
+    const userCart = getUserCart(user.id.toString());
+
+    const mergedCart = [...userCart];
+
+    guestCart.forEach((guestItem) => {
+      const userItemIndex = mergedCart.findIndex(
+        (item) => item.id === guestItem.id
+      );
+      if (userItemIndex !== -1) {
+        // If item exists in user's cart, update quantity
+        mergedCart[userItemIndex].quantity += guestItem.quantity;
+      } else {
+        // If item doesn't exist, add it to the user's cart
+        mergedCart.push(guestItem);
+      }
+    });
+
+    saveUserCart(mergedCart, user.id.toString());
+    saveUserCart([], "guest"); // Clear guest cart after merging
+  };
+
   useEffect(() => {
     const updateCartCount = () => {
       const cart = getUserCart();
@@ -128,98 +157,12 @@ export function useCart() {
     };
   }, [user, allProducts]); // Add user as a dependency
 
-  // const addToCart = (product: Product) => {
-  //   // Get user data if it exists
-  //   const user = JSON.parse(localStorage.getItem("user") || "{}");
-  //   const userId = user.id || null;
-
-  //   const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-
-  //   // Check if product already exists in cart
-  //   const existingProductIndex = cart.findIndex(
-  //     (item: { id: number; userId: number | null }) =>
-  //       item.id === product.id && item.userId === userId
-  //   );
-
-  //   if (existingProductIndex !== -1) {
-  //     // If product exists, increment quantity
-  //     cart[existingProductIndex].quantity += 1;
-  //   } else {
-  //     // If product doesn't exist, add it with quantity 1
-  //     cart.push({
-  //       id: product.id,
-  //       quantity: 1,
-  //       userId: userId,
-  //     });
-  //   }
-
-  //   localStorage.setItem("cart", JSON.stringify(cart));
-  //   window.dispatchEvent(new Event("cartUpdate"));
-  //   hideModal();
-
-  //   console.log("Product added to cart:", cart);
-  // };
-
-  // Function to remove an item from the cart or empty the cart
-  // const removeFromCart = (itemId?: number) => {
-  //   let currentCart: CartItemStorage[] = JSON.parse(
-  //     localStorage.getItem("cart") || "[]"
-  //   );
-
-  //   if (itemId !== undefined) {
-  //     // If itemId is provided, filter out the specific item
-  //     currentCart = currentCart.filter((item) => item.id !== itemId);
-  //   } else {
-  //     // If no itemId is provided, empty the cart
-  //     currentCart = [];
-  //   }
-
-  //   localStorage.setItem("cart", JSON.stringify(currentCart));
-
-  //   // Trigger update on custom event
-  //   window.dispatchEvent(new Event("cartUpdate"));
-  // };
-
-  // useEffect(() => {
-  //   const updateCartCount = () => {
-  //     const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-  //     const user = JSON.parse(localStorage.getItem("user") || "{}");
-  //     const userId = user.id || null;
-
-  //     // Sum up quantities for items matching the current userId
-  //     const count = cart.reduce(
-  //       (total: number, item: { quantity: number; userId: number | null }) => {
-  //         if (item.userId === userId) {
-  //           return total + item.quantity;
-  //         }
-  //         return total;
-  //       },
-  //       0
-  //     );
-  //     setCartItems(getCartItemsFromLocalStorage()); // Update cart items
-  //     setCartCount(count); // Update cart count
-  //   };
-
-  //   // Initial count
-  //   updateCartCount();
-
-  //   // Listen for storage changes
-  //   window.addEventListener("storage", updateCartCount);
-
-  //   // Custom event for cart updates
-  //   window.addEventListener("cartUpdate", updateCartCount);
-
-  //   return () => {
-  //     window.removeEventListener("storage", updateCartCount);
-  //     window.removeEventListener("cartUpdate", updateCartCount);
-  //   };
-  // }, [allProducts]);
-
   return {
     cartCount,
     cartItems,
     addToCart,
     removeFromCart,
     handleQuantityChange,
+    mergeGuestCart,
   };
 }

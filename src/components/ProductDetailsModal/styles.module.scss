@@ -47,6 +47,11 @@
       display: flex;
       flex-flow: row nowrap;
       gap: 8px;
+      padding-bottom: 16px;
+
+      [class~="ant-rate"] {
+        color: unset;
+      }
     }
 
     &Warranty {
@@ -54,7 +59,7 @@
       opacity: 0.6;
     }
     > h4 {
-      margin: 10px 0px;
+      margin: 0;
       font-style: italic;
     }
   }

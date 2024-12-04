@@ -9,19 +9,28 @@ import { useNavigate } from "react-router-dom";
 
 import { AppRoute } from "../../constants/constants";
 import { useAuth } from "../../hooks/useAuth";
+import { useCart } from "../../hooks/useCart";
 import { LoginCredentials } from "../../types/auth.types";
 import styles from "./styles.module.scss";
+
+interface LoginFormValues extends LoginCredentials {
+  keepCart: boolean;
+}
 
 function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const { mergeGuestCart } = useCart();
 
-  const onFinish = async (values: LoginCredentials) => {
+  const onFinish = async (values: LoginFormValues) => {
     try {
       setLoading(true);
-      await login(values);
+      const user = await login(values);
       message.success("Login successful");
+      if (values.keepCart) {
+        mergeGuestCart(user);
+      }
       navigate(AppRoute.BASE);
     } catch (error) {
       console.error("Login failed:", error);
@@ -69,11 +78,12 @@ function LoginPage() {
                 placeholder="Password"
               />
             </Form.Item>
-            <Form.Item>
-              <Checkbox defaultChecked>
-                {" "}
-                Keep items in your cart after logging in
-              </Checkbox>
+            <Form.Item
+              name="keepCart"
+              valuePropName="checked"
+              initialValue={true}
+            >
+              <Checkbox> Keep items in your cart after logging in</Checkbox>
             </Form.Item>
 
             <Form.Item>

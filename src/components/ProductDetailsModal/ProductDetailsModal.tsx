@@ -1,4 +1,4 @@
-import { Button, Modal, Rate } from "antd";
+import { Button, Modal, Rate, Tooltip } from "antd";
 
 import { ImageMode } from "../../constants/constants";
 import { Product } from "../../types/product.types";
@@ -26,9 +26,15 @@ function ProductDetailsModal({
       open={visible}
       title={<div className={styles.modalTitle}>{product.title}</div>}
       footer={[
-        <Button key="add" onClick={() => onAdd(product)}>
-          Add to Cart
-        </Button>,
+        <Tooltip
+          key="add"
+          title={!product.stock ? "Out of stock" : ""}
+          arrow={false}
+        >
+          <Button disabled={!product.stock} onClick={() => onAdd(product)}>
+            Add to Cart
+          </Button>
+        </Tooltip>,
       ]}
       onOk={() => onAdd(product)}
       onCancel={onCancel}

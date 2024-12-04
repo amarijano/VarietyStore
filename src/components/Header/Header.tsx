@@ -12,7 +12,7 @@ import styles from "./styles.module.scss";
 function Header() {
   const navigate = useNavigate();
   const { cartCount } = useCart();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [searchValue, setSearchValue] = useState("");
 
   const handleLogoClick = () => {
@@ -31,7 +31,13 @@ function Header() {
       newParams.delete("q");
     }
     newParams.set("page", "1"); // Reset to first page when searching
-    setSearchParams(newParams);
+
+    // Navigate to products page with search params
+    navigate({
+      pathname: AppRoute.BASE,
+      search: newParams.toString(),
+    });
+
     setSearchValue("");
   };
 
