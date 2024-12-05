@@ -41,7 +41,10 @@ function ProductCard({ product, loading }: ProductCardProps) {
           loading ? (
             <Skeleton.Image className={styles.skeletonImage} active />
           ) : (
-            <ImageDisplay images={product.images} mode={ImageMode.SINGLE} />
+            <ImageDisplay
+              images={[product.thumbnail]}
+              mode={ImageMode.SINGLE}
+            />
           )
         }
         hoverable

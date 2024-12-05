@@ -3,15 +3,15 @@ import { Button } from "antd";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
+import { Price } from "../../components";
+import CartListItem from "../../components/CartListItem/CartListItem";
 import { AppRoute } from "../../constants/constants";
 import { useModal } from "../../context/ModalContext";
 import { useCart } from "../../hooks/useCart";
 import { CartItem, Product } from "../../types/product.types";
-import { Price } from "..";
-import CartListItem from "../CartListItem/CartListItem";
 import styles from "./styles.module.scss";
 
-function Cart() {
+function CartView() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { showModal } = useModal();
@@ -42,7 +42,7 @@ function Cart() {
           </p>
           <div className={styles.cartContent}>
             <div className={styles.cartContentLeft}>
-              <ul>
+              <ul className={styles.cartList}>
                 {cartItems.map((item) => (
                   <CartListItem
                     key={item.id}
@@ -78,7 +78,7 @@ function Cart() {
                 <Price amount={totalAmount} />
               </div>
               <Button type="primary" disabled>
-                {t("cart.button.goToCheckout")}
+                {t("cart.goToCheckout")}
               </Button>
             </div>
           </div>
@@ -99,4 +99,4 @@ function Cart() {
   );
 }
 
-export default Cart;
+export default CartView;

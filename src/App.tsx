@@ -7,7 +7,7 @@ import styles from "./App.styles.module.scss";
 import { Header } from "./components";
 import { ModalProvider } from "./context/ModalContext";
 import { ProductsProvider } from "./context/ProductsContext";
-import { AppRoutes } from "./router/data/routes";
+import { AppRoutes } from "./router/routes";
 
 function App() {
   const routesElement = useRoutes(AppRoutes());
