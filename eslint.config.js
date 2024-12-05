@@ -79,6 +79,11 @@ export default [
       "simple-import-sort/imports": "warn",
       "simple-import-sort/exports": "warn",
       "react/react-in-jsx-scope": "off",
+      "no-unused-vars": ["warn", { ignoreRestSiblings: true }],
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        { ignoreRestSiblings: true },
+      ],
     },
   },
 ];

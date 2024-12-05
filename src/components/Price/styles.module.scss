@@ -1,4 +1,13 @@
+@use "../../scss/variables.scss" as *;
+
 .price {
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: $font-size-large;
+  font-weight: $font-weight-semi-bold;
+  line-height: 24px;
+}
+
+.priceLight {
+  font-size: $font-size-medium;
+  font-weight: $font-weight-normal;
+  line-height: 24px;
 }

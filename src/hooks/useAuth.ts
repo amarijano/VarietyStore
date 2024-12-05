@@ -4,6 +4,7 @@ import {
   LoginCredentials,
   LoginResponse,
   RefreshResponse,
+  User,
 } from "../types/auth.types";
 
 const AUTH_STATE_CHANGE = "auth-state-change";
@@ -14,9 +15,16 @@ export function useAuth() {
     return !!localStorage.getItem("accessToken");
   });
 
+  const [user, setUser] = useState<User | null>(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null; // Initialize user state
+  });
+
   useEffect(() => {
     const updateAuthState = () => {
       setIsLoggedIn(!!localStorage.getItem("accessToken"));
+      const storedUser = localStorage.getItem("user");
+      setUser(storedUser ? JSON.parse(storedUser) : null); // Update user state
     };
 
     window.addEventListener(AUTH_STATE_CHANGE, updateAuthState);
@@ -50,6 +58,7 @@ export function useAuth() {
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("user", JSON.stringify(userData));
       setIsLoggedIn(true);
+      setUser(userData);
       window.dispatchEvent(authStateEvent);
       window.dispatchEvent(new Event("cartUpdate"));
       return data;
@@ -85,6 +94,7 @@ export function useAuth() {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("user");
     setIsLoggedIn(false);
+    setUser(null);
     window.dispatchEvent(authStateEvent);
     window.dispatchEvent(new Event("cartUpdate"));
   };
@@ -119,5 +129,12 @@ export function useAuth() {
     }
   };
 
-  return { isLoggedIn, login, logout, fetchWithAutoRefresh, refreshToken };
+  return {
+    isLoggedIn,
+    user,
+    login,
+    logout,
+    fetchWithAutoRefresh,
+    refreshToken,
+  };
 }

@@ -1,9 +1,31 @@
+@use "../../scss/variables.scss" as *;
+
+.modal {
+  height: 80%;
+  width: 80%;
+  > div {
+    height: 100%;
+  }
+}
+
+.modalTitle {
+  font-size: $font-size-xl;
+}
+
+.modalContent {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .modalBody {
   display: flex;
   flex-flow: row nowrap;
-  gap: 10px;
   height: 70%;
   flex: 1;
+  margin-top: 60px;
+  margin-right: 20px;
 
   .detailsContainer,
   .imageContainer {
@@ -16,30 +38,29 @@
     align-items: center;
   }
   .detailsContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
     &Description {
-      font-size: 1.2rem;
+      font-size: $font-size-medium;
+      margin-bottom: 10px;
     }
-    &Price {
-      font-size: 1.5rem;
-      font-weight: bold;
+
+    &Rating {
+      display: flex;
+      flex-flow: row nowrap;
+      gap: 8px;
+      padding-bottom: 16px;
+
+      [class~="ant-rate"] {
+        color: unset;
+      }
+    }
+
+    &Warranty {
+      font-size: $font-size-small;
+      opacity: 0.6;
+    }
+    > h4 {
+      margin: 0;
+      font-style: italic;
     }
   }
-}
-
-.modal {
-  height: 80%;
-  width: 80%;
-  > div {
-    height: 100%;
-  }
-}
-
-.modalContent {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
 }

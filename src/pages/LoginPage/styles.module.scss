@@ -1,21 +1,22 @@
-.loginContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: calc(100vh - 64px);
-  background-color: #f0f2f5;
-}
-
-.loginCard {
-  background: white;
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
-}
-
-.title {
-  text-align: center;
-  margin-bottom: 32px !important;
+.loginForm {
+  &Container {
+    display: grid;
+  }
+  &Wrapper {
+    background-color: #f5f5f5;
+    justify-self: center;
+    padding-top: 40px;
+  }
+  &Card {
+    padding: 40px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+  }
+  &Title {
+    text-align: center;
+    margin-bottom: 32px !important;
+  }
 }
