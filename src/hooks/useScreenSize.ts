@@ -10,7 +10,6 @@ export function useScreenSize() {
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= MOBILE_BREAKPOINT);
-      console.log(window.innerWidth, "widdth");
     };
 
     window.addEventListener("resize", handleResize);
