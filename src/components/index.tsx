@@ -1,4 +1,3 @@
-export { default as Cart } from "./Cart/Cart";
 export { default as Filter } from "./Filter/Filter";
 export { default as FilterChip } from "./FilterChip/FilterChip";
 export { default as Header } from "./Header/Header";

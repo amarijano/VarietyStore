@@ -29,7 +29,8 @@
     },
     "minPlaceholder": "Min",
     "maxPlaceholder": "Max",
-    "applyButton": "Apply"
+    "applyButton": "Apply",
+    "filters": "Filters"
   },
   "header": {
     "searchPlaceholder": "Search products...",
@@ -83,5 +84,10 @@
       "price-desc": "Price (High-Low)"
     },
     "noProductsFound": "No products found. Try adjusting your filters."
+  },
+  "notFound": {
+    "title": "404 - Page Not Found",
+    "description": "Sorry, the page you are looking for does not exist.",
+    "homeButton": "Go To Home"
   }
 }

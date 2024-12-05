@@ -1,8 +1,7 @@
 import { Navigate } from "react-router-dom";
 
-import { Cart } from "../../components";
-import { AppRoute } from "../../constants/constants";
-import { LoginView, ProductsView } from "../../pages";
+import { AppRoute } from "../constants/constants";
+import { CartView, LoginView, NotFoundView, ProductsView } from "../pages";
 
 export function AppRoutes() {
   return [
@@ -23,7 +22,7 @@ export function AppRoutes() {
     {
       path: AppRoute.CART,
       title: "Cart",
-      element: <Cart />,
+      element: <CartView />,
     },
     {
       path: AppRoute.SEARCH,
@@ -33,7 +32,7 @@ export function AppRoutes() {
     {
       path: "*",
       title: "Not Found",
-      element: <div>NotFOund Page</div>,
+      element: <NotFoundView />,
     },
   ];
 }
