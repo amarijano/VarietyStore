@@ -5,6 +5,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, message, Typography } from "antd";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import { AppRoute } from "../../constants/constants";
@@ -17,9 +18,10 @@ interface LoginFormValues extends LoginCredentials {
   keepCart: boolean;
 }
 
-function LoginPage() {
-  const { login } = useAuth();
+function LoginView() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [loading, setLoading] = useState(false);
   const { mergeGuestCart } = useCart();
 
@@ -27,14 +29,14 @@ function LoginPage() {
     try {
       setLoading(true);
       const user = await login(values);
-      message.success("Login successful");
+      message.success(t("loginView.loginSuccess"));
       if (values.keepCart) {
         mergeGuestCart(user);
       }
       navigate(AppRoute.BASE);
     } catch (error) {
       console.error("Login failed:", error);
-      message.error("Login failed");
+      message.error(t("loginView.loginFailed"));
     } finally {
       setLoading(false);
     }
@@ -43,39 +45,39 @@ function LoginPage() {
   return (
     <div className={styles.loginFormContainer}>
       <div>
-        <Button type="text" onClick={() => navigate("/products")}>
-          <ArrowLeftOutlined /> Continue shopping as guest
+        <Button type="text" onClick={() => navigate(AppRoute.BASE)}>
+          <ArrowLeftOutlined /> {t("loginView.continueShopping")}
         </Button>
       </div>
 
       <div className={styles.loginFormWrapper}>
         <div className={styles.loginFormCard}>
           <Typography.Title level={2} className={styles.loginFormTitle}>
-            Login
+            {t("loginView.loginTitle")}
           </Typography.Title>
 
           <Form name="login" onFinish={onFinish} layout="vertical" size="large">
             <Form.Item
               name="username"
               rules={[
-                { required: true, message: "Please input your username!" },
+                { required: true, message: t("loginView.usernameRequired") },
               ]}
             >
               <Input
                 prefix={<UserOutlined />}
-                placeholder="Username or Email"
+                placeholder={t("loginView.usernamePlaceholder")}
               />
             </Form.Item>
 
             <Form.Item
               name="password"
               rules={[
-                { required: true, message: "Please input your password!" },
+                { required: true, message: t("loginView.passwordRequired") },
               ]}
             >
               <Input.Password
                 prefix={<LockOutlined />}
-                placeholder="Password"
+                placeholder={t("loginView.passwordPlaceholder")}
               />
             </Form.Item>
             <Form.Item
@@ -83,12 +85,12 @@ function LoginPage() {
               valuePropName="checked"
               initialValue={true}
             >
-              <Checkbox> Keep items in your cart after logging in</Checkbox>
+              <Checkbox>{t("loginView.checkboxText")}</Checkbox>
             </Form.Item>
 
             <Form.Item>
               <Button type="primary" htmlType="submit" block loading={loading}>
-                Log in
+                {t("loginView.loginButton")}
               </Button>
             </Form.Item>
           </Form>
@@ -98,4 +100,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default LoginView;

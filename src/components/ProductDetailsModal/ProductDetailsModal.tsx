@@ -1,4 +1,5 @@
 import { Button, Modal, Rate, Tooltip } from "antd";
+import { useTranslation } from "react-i18next";
 
 import { ImageMode } from "../../constants/constants";
 import { Product } from "../../types/product.types";
@@ -19,6 +20,8 @@ function ProductDetailsModal({
   onAdd,
   onCancel,
 }: ProductDetailsModalProps) {
+  const { t } = useTranslation();
+
   return (
     <Modal
       className={styles.modal}
@@ -28,11 +31,11 @@ function ProductDetailsModal({
       footer={[
         <Tooltip
           key="add"
-          title={!product.stock ? "Out of stock" : ""}
+          title={!product.stock ? t("productDetailsModal.outOfStock") : ""}
           arrow={false}
         >
           <Button disabled={!product.stock} onClick={() => onAdd(product)}>
-            Add to Cart
+            {t("productDetailsModal.addToCart")}
           </Button>
         </Tooltip>,
       ]}
@@ -50,8 +53,9 @@ function ProductDetailsModal({
         <div className={styles.detailsContainerRating}>
           <Rate value={product.rating} disabled allowHalf />
           <div>
-            ({product.reviews.length}{" "}
-            {product.reviews.length > 1 ? "reviews" : "review"})
+            {t("productDetailsModal.rateText", {
+              count: product.reviews.length,
+            })}
           </div>
         </div>
 

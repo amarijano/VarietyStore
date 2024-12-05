@@ -28,7 +28,6 @@ export function ProductsProvider({ children }: { children: ReactNode }) {
       setLoading(true);
       setCategoriesLoading(true);
       try {
-        // Fetch both in parallel
         const [productsResponse, categoriesResponse] = await Promise.all([
           fetchWithAutoRefresh("/api/products?limit=0"),
           fetchWithAutoRefresh("/api/products/categories"),
@@ -42,7 +41,7 @@ export function ProductsProvider({ children }: { children: ReactNode }) {
         const categoriesData = await categoriesResponse.json();
 
         setAllProducts(productsData.products);
-        setCategories(categoriesData); // The response is already the array we need
+        setCategories(categoriesData);
       } catch (err) {
         setError(err instanceof Error ? err : new Error("An error occurred"));
       } finally {

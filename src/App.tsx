@@ -1,3 +1,5 @@
+import "./i18n";
+
 import { Layout } from "antd";
 import { useRoutes } from "react-router-dom";
 

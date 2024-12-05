@@ -2,7 +2,7 @@ import { Navigate } from "react-router-dom";
 
 import { Cart } from "../../components";
 import { AppRoute } from "../../constants/constants";
-import { LoginPage, ProductsView } from "../../pages";
+import { LoginView, ProductsView } from "../../pages";
 
 export function AppRoutes() {
   return [
@@ -18,7 +18,7 @@ export function AppRoutes() {
     {
       path: AppRoute.LOGIN,
       title: "Login",
-      element: <LoginPage />,
+      element: <LoginView />,
     },
     {
       path: AppRoute.CART,

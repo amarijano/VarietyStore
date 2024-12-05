@@ -1,6 +1,7 @@
 import { DeleteOutlined } from "@ant-design/icons";
 import { Button, InputNumber } from "antd";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import { ImageMode } from "../../constants/constants";
 import { CartItem } from "../../types/product.types";
@@ -20,6 +21,7 @@ const CartListItem: React.FC<CartListItemProps> = ({
   deleteItem,
   onCartListItemClick,
 }) => {
+  const { t } = useTranslation();
   const handleQuantityChange = (value: number | null) => {
     if (value !== null) {
       onQuantityChange(item.id, value);
@@ -39,14 +41,16 @@ const CartListItem: React.FC<CartListItemProps> = ({
         </div>
       </div>
       <div className={styles.cartListItemPriceContainer}>
-        <label className={styles.label}>PRICE</label>
+        <label className={styles.label}>{t("cartListItem.label.price")}</label>
         <Price amount={item.price} isLight />
       </div>
       <div
         className={styles.cartListItemQuantityContainer}
         onClick={(event) => event.stopPropagation()}
       >
-        <label className={styles.label}>QUANTITY</label>
+        <label className={styles.label}>
+          {t("cartListItem.label.quantity")}
+        </label>
         <InputNumber
           min={1}
           defaultValue={item.quantity}
@@ -58,7 +62,7 @@ const CartListItem: React.FC<CartListItemProps> = ({
         />
       </div>
       <div className={styles.cartListItemTotalContainer}>
-        <label className={styles.label}>TOTAL</label>
+        <label className={styles.label}>{t("cartListItem.label.total")}</label>
         <Price amount={item.price * item.quantity} isLight />
       </div>
       <Button

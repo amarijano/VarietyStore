@@ -1,16 +1,8 @@
-import {
-  Empty,
-  FloatButton,
-  InputNumber,
-  Pagination,
-  Select,
-  Space,
-  Spin,
-} from "antd";
+import { Empty, FloatButton, Pagination, Select, Space, Spin } from "antd";
+import { useTranslation } from "react-i18next";
 
 import { Filter, FilterChip, ProductGrid } from "../../components";
 import {
-  ALL_CATEGORIES_VALUE,
   FilterTypes,
   SortField,
   SortOptions,
@@ -22,6 +14,7 @@ import { useProductsData } from "../../hooks/useProductsData";
 import styles from "./styles.module.scss";
 
 function ProductsView() {
+  const { t } = useTranslation();
   const {
     products,
     totalItems,
@@ -33,14 +26,6 @@ function ProductsView() {
   } = useProductsData();
 
   const { categories = [], loading: categoriesLoading } = useProductsContext();
-  console.log(loading, categoriesLoading, "loading", "categoriesLoading");
-
-  // Ensure the selected category is valid
-  const validCategory = categories?.some(
-    (cat) => cat.slug === currentState.filters.category
-  )
-    ? currentState.filters.category
-    : ALL_CATEGORIES_VALUE;
 
   // Ensure the sort is valid
   const validSort =
@@ -60,21 +45,6 @@ function ProductsView() {
     updateSort(field, order);
   };
 
-  const handlePriceChange = (min: number | null, max: number | null) => {
-    // If min is higher than max, clear min
-    if (min !== null && max !== null && min > max) {
-      min = null;
-    }
-    // If max is lower than min, clear max
-    if (max !== null && min !== null && max < min) {
-      max = null;
-    }
-
-    updateFilters({
-      priceRange: { min, max },
-    });
-  };
-
   const filterChips = [
     {
       type: FilterTypes.CATEGORY,
@@ -85,7 +55,7 @@ function ProductsView() {
     },
     {
       type: FilterTypes.MIN_PRICE,
-      label: "Min Price",
+      label: t("productsView.minPriceLabel"),
       value:
         currentState.filters.priceRange.min !== null &&
         currentState.filters.priceRange.min > 0
@@ -101,7 +71,7 @@ function ProductsView() {
     },
     {
       type: FilterTypes.MAX_PRICE,
-      label: "Max Price",
+      label: t("productsView.maxPriceLabel"),
       value:
         currentState.filters.priceRange.max !== null
           ? `${currentState.filters.priceRange.max}€`
@@ -116,7 +86,7 @@ function ProductsView() {
     },
     {
       type: FilterTypes.SEARCH,
-      label: "Search",
+      label: t("productsView.searchLabel"),
       value: currentState.filters.search,
       onClose: () => updateFilters({ search: null }),
     },
@@ -126,93 +96,36 @@ function ProductsView() {
     <div className={styles.homePageContainer}>
       {loading ? (
         <div className={styles.loadingContainer}>
-          <Spin size="large" fullscreen tip="Loading products..." />
+          <Spin size="large" fullscreen tip={t("productsView.loadingText")} />
         </div>
       ) : (
         <>
           <div className={styles.controls}>
-            <Space size="large">
-              <Filter
-                categories={categories}
-                selectedCategory={currentState.filters.category}
-                priceRange={currentState.filters.priceRange}
-                onCategoryChange={(category) => updateFilters({ category })}
-                onPriceChange={(min, max) =>
-                  updateFilters({
-                    priceRange: { min, max },
-                  })
-                }
-                loading={loading || categoriesLoading}
-              />
-
-              <Space align="center">
-                <span>Category:</span>
-                <Select
-                  value={validCategory || ALL_CATEGORIES_VALUE}
-                  onChange={(value) =>
-                    updateFilters({
-                      category: value === ALL_CATEGORIES_VALUE ? null : value,
-                    })
-                  }
-                  style={{ width: 200 }}
-                  loading={categoriesLoading}
-                >
-                  <Select.Option value={ALL_CATEGORIES_VALUE}>
-                    All Categories
+            <Filter
+              categories={categories}
+              selectedCategory={currentState.filters.category}
+              priceRange={currentState.filters.priceRange}
+              onCategoryChange={(category) => updateFilters({ category })}
+              onPriceChange={(min, max) =>
+                updateFilters({
+                  priceRange: { min, max },
+                })
+              }
+              loading={loading || categoriesLoading}
+            />
+            <Space>
+              <span>{t("productsView.sortLabel")}</span>
+              <Select
+                value={validSort}
+                onChange={handleSortChange}
+                style={{ width: 180 }}
+              >
+                {Object.values(SortOptions).map((option) => (
+                  <Select.Option key={option} value={option}>
+                    {t(`productsView.sortOptions.${option}`)}
                   </Select.Option>
-                  {categories.map((category) => (
-                    <Select.Option key={category.slug} value={category.slug}>
-                      {category.name}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Space>
-
-              <Space align="center">
-                <span>Price:</span>
-                <InputNumber
-                  placeholder="Min"
-                  value={currentState.filters.priceRange.min}
-                  onChange={(value) =>
-                    handlePriceChange(
-                      value,
-                      currentState.filters.priceRange.max
-                    )
-                  }
-                  min={0}
-                  max={currentState.filters.priceRange.max || undefined}
-                  style={{ width: 100 }}
-                />
-                <span>-</span>
-                <InputNumber
-                  placeholder="Max"
-                  value={currentState.filters.priceRange.max}
-                  onChange={(value) =>
-                    handlePriceChange(
-                      currentState.filters.priceRange.min,
-                      value
-                    )
-                  }
-                  min={currentState.filters.priceRange.min || 0}
-                  style={{ width: 100 }}
-                />
-              </Space>
-
-              <Space align="center">
-                <span>Sort by:</span>
-                <Select
-                  value={validSort}
-                  onChange={handleSortChange}
-                  style={{ width: 180 }}
-                >
-                  {Object.values(SortOptions).map((option) => (
-                    <Select.Option key={option} value={option}>
-                      {/* {t(`sort.options.${option}`)} */}
-                      {option}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Space>
+                ))}
+              </Select>
             </Space>
           </div>
 
@@ -241,7 +154,7 @@ function ProductsView() {
                 image={Empty.PRESENTED_IMAGE_SIMPLE}
                 description={
                   <span className={styles.emptyText}>
-                    No products found. Try adjusting your filters.
+                    {t("productsView.noProductsFound")}
                   </span>
                 }
               />
