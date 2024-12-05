@@ -149,7 +149,7 @@ const Filter = ({
       destroyPopupOnHide
     >
       <Button type="text" icon={<FilterOutlined />} loading={loading}>
-        Filters <DownOutlined />
+        {t("filter.filters")} <DownOutlined />
       </Button>
     </Dropdown>
   );
