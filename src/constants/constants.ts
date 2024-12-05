@@ -63,3 +63,5 @@ export enum FilterTypes {
 }
 
 export const ALL_CATEGORIES_VALUE = "all";
+
+export const MOBILE_BREAKPOINT = 440;

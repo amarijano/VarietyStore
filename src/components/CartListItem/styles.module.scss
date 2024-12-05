@@ -1,4 +1,5 @@
 @use "../../scss/variables.scss" as *;
+@use "../../scss/screenBreakpoints.scss" as *;
 
 .cartListItem {
   display: flex;
@@ -35,6 +36,17 @@
       opacity: 0.6;
     }
   }
+
+  // @include tablet {
+  //   [class~="ant-btn"] {
+  //     padding: 0;
+  //   }
+  //   align-items: unset;
+  //   max-height: 380px;
+  //   gap: 0;
+  //   padding: 8px;
+  //   flex-direction: column;
+  // }
 }
 
 .thumbnailButton {
@@ -44,6 +56,10 @@
   margin-right: 16px;
   width: 100px;
   height: 100px;
+
+  // @include tablet {
+  //   margin-right: 0;
+  // }
 }
 
 .cartListItemDetails {
@@ -85,5 +101,37 @@
   > span > svg {
     width: 20px;
     height: 20px;
+  }
+}
+
+@include mobile {
+  .cartListItem {
+    [class~="ant-btn"] {
+      padding: 0;
+    }
+    align-items: unset;
+    max-height: 380px;
+    gap: 0;
+    padding: 8px;
+    flex-direction: column;
+  }
+
+  .cartListItemDetailsMobileContainer {
+    display: flex;
+  }
+
+  .cartListItemDetails {
+    h4 {
+      margin: 10px 0 0;
+    }
+    p {
+      margin: 0 0 8px 0;
+    }
+  }
+
+  .cartListItemMobilePriceContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
   }
 }
