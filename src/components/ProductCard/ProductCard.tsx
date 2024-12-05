@@ -32,6 +32,7 @@ function ProductCard({ product, loading }: ProductCardProps) {
   return (
     <>
       <Card
+        data-testid="card-button"
         classNames={{
           cover: styles.productCardCover,
           body: styles.productCardBody,
@@ -66,6 +67,7 @@ function ProductCard({ product, loading }: ProductCardProps) {
                 >
                   <Button
                     type="text"
+                    data-testid="add-to-cart-button"
                     icon={<PlusCircleOutlined size={30} />}
                     onClick={(event) => {
                       event.stopPropagation();

@@ -53,7 +53,7 @@ function ImageDisplay({ images, mode }: ImageDisplayProps) {
       dots={{ className: `${styles.carouselDots}` }}
     >
       {images.map((image, index) => (
-        <div key={index} className={styles.carouselSlide}>
+        <div key={index} role="img" className={styles.carouselSlide}>
           {!loadedImages[image] && (
             <Skeleton.Image active className={styles.skeletonImage} />
           )}

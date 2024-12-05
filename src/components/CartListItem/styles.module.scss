@@ -36,17 +36,6 @@
       opacity: 0.6;
     }
   }
-
-  // @include tablet {
-  //   [class~="ant-btn"] {
-  //     padding: 0;
-  //   }
-  //   align-items: unset;
-  //   max-height: 380px;
-  //   gap: 0;
-  //   padding: 8px;
-  //   flex-direction: column;
-  // }
 }
 
 .thumbnailButton {
@@ -56,10 +45,6 @@
   margin-right: 16px;
   width: 100px;
   height: 100px;
-
-  // @include tablet {
-  //   margin-right: 0;
-  // }
 }
 
 .cartListItemDetails {
