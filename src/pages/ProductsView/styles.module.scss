@@ -1,21 +1,56 @@
+@use "../../scss/variables.scss" as *;
+
 .homePageContainer {
   display: flex;
   flex-direction: column;
-  height: auto;
-  min-height: 100%;
+  min-height: calc(100vh - 64px);
+  height: 100%;
+  padding: 12px 50px;
 
   [class~="ant-float-btn"] {
     left: 25px;
-    bottom: 68px;
+    bottom: 35%;
   }
 }
 
 .homePageContent {
-  flex: 1;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  justify-content: center;
+
+  .emptyProducts {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    [class~="ant-empty-image"] {
+      height: 100%;
+    }
+
+    .emptyText {
+      font-size: $font-size-large;
+    }
+  }
 }
 
 .controls {
   margin-bottom: 16px;
   display: flex;
   justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+.activeFilters {
+  flex-shrink: 0;
+}
+
+.loadingContainer {
+  [class~="ant-spin-text"] {
+    font-size: $font-size-xl;
+    padding-top: 16px;
+  }
 }

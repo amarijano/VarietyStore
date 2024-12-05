@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 import ProductDetailsModal from "../components/ProductDetailsModal/ProductDetailsModal";
 import { Product } from "../types/product.types";
@@ -25,6 +31,10 @@ const ModalContext = createContext<ModalContextType | undefined>(undefined);
 export function ModalProvider({ children }: { children: ReactNode }) {
   const [modalConfig, setModalConfig] = useState<ModalConfig | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  useEffect(() => {
+    hideModal();
+  }, [location.pathname]);
 
   const showModal: ModalContextType["showModal"] = (type, onOk, data) => {
     setModalConfig({ type, onOk, data } as ModalConfig);

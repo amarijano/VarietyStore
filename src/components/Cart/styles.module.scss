@@ -1,7 +1,11 @@
 @use "../../scss/variables.scss" as *;
 
-.cardContainer {
-  padding: 20px;
+.cartContainer {
+  max-height: calc(100vh - 64px);
+  height: 100%;
+  padding: 12px 50px;
+  display: flex;
+  flex-direction: column;
   &Empty {
     display: flex;
     flex-direction: column;
@@ -15,21 +19,26 @@
 .cartContent {
   display: flex;
   flex-direction: row;
-  gap: 24px;
+  gap: 36px;
   justify-content: center;
+  flex: 1;
+  overflow: hidden;
 
   &Left {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     flex-grow: 1;
-    gap: 32px;
+    gap: 55px;
     max-width: 1000px;
+    overflow: hidden;
     > ul {
       list-style-type: none;
       padding: 0;
       flex-grow: 1;
       margin: 0;
+      overflow-y: auto;
+      min-height: 0;
     }
   }
 }

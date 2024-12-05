@@ -1,4 +1,5 @@
-import { Carousel } from "antd";
+import { Carousel, Skeleton } from "antd";
+import { useState } from "react";
 
 import { ImageMode } from "../../constants/constants";
 import styles from "./styles.module.scss";
@@ -9,13 +10,35 @@ interface ImageDisplayProps {
 }
 
 function ImageDisplay({ images, mode }: ImageDisplayProps) {
+  const [loadedImages, setLoadedImages] = useState<{ [key: string]: boolean }>(
+    {}
+  );
+
   if (!images.length) {
     return <div className={styles.placeholder}>No image available</div>;
   }
 
+  const handleImageLoad = (imageSrc: string) => {
+    setLoadedImages((prev) => ({
+      ...prev,
+      [imageSrc]: true,
+    }));
+  };
+
   if (mode === ImageMode.SINGLE || images.length === 1) {
     return (
-      <img src={images[0]} alt="Product image" className={styles.singleImage} />
+      <>
+        {!loadedImages[images[0]] && (
+          <Skeleton.Image active className={styles.skeletonImage} />
+        )}
+        <img
+          src={images[0]}
+          alt="Product image"
+          className={styles.singleImage}
+          style={{ display: loadedImages[images[0]] ? "block" : "none" }}
+          onLoad={() => handleImageLoad(images[0])}
+        />
+      </>
     );
   }
 
@@ -27,7 +50,15 @@ function ImageDisplay({ images, mode }: ImageDisplayProps) {
     >
       {images.map((image, index) => (
         <div key={index} className={styles.carouselSlide}>
-          <img src={image} alt={`Product image ${index + 1}`} />
+          {!loadedImages[image] && (
+            <Skeleton.Image active className={styles.skeletonImage} />
+          )}
+          <img
+            src={image}
+            alt={`Product image ${index + 1}`}
+            style={{ display: loadedImages[image] ? "block" : "none" }}
+            onLoad={() => handleImageLoad(image)}
+          />
         </div>
       ))}
     </Carousel>

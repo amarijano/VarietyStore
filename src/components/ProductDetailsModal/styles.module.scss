@@ -24,7 +24,6 @@
   flex-flow: row nowrap;
   height: 70%;
   flex: 1;
-  margin-top: 60px;
   margin-right: 20px;
 
   .detailsContainer,
@@ -38,6 +37,8 @@
     align-items: center;
   }
   .detailsContainer {
+    margin-top: 60px;
+
     &Description {
       font-size: $font-size-medium;
       margin-bottom: 10px;

@@ -1,3 +1,4 @@
+import { PlusCircleOutlined } from "@ant-design/icons";
 import { Button, Card, Skeleton, Tooltip } from "antd";
 import React from "react";
 
@@ -19,37 +20,6 @@ function ProductCard({ product, loading }: ProductCardProps) {
   const { showModal } = useModal();
   const { addToCart } = useCart();
 
-  // const addToCart = (event: React.MouseEvent) => {
-  //   event.stopPropagation();
-  //   // Get user data if it exists
-  //   const user = JSON.parse(localStorage.getItem("user") || "{}");
-  //   const userId = user.id || null;
-
-  //   const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-
-  //   // Check if product already exists in cart
-  //   const existingProductIndex = cart.findIndex(
-  //     (item: { id: number; userId: number | null }) =>
-  //       item.id === product.id && item.userId === userId
-  //   );
-
-  //   if (existingProductIndex !== -1) {
-  //     // If product exists, increment quantity
-  //     cart[existingProductIndex].quantity += 1;
-  //   } else {
-  //     // If product doesn't exist, add it with quantity 1
-  //     cart.push({
-  //       id: product.id,
-  //       quantity: 1,
-  //       userId: userId,
-  //     });
-  //   }
-
-  //   localStorage.setItem("cart", JSON.stringify(cart));
-  //   window.dispatchEvent(new Event("cartUpdate"));
-  //   console.log("Product added to cart:", cart);
-  // };
-
   const showProductDetailsModal = (
     event: React.MouseEvent<Element, MouseEvent>
   ) => {
@@ -60,11 +30,14 @@ function ProductCard({ product, loading }: ProductCardProps) {
   return (
     <>
       <Card
-        classNames={{ cover: styles.productCardCover }}
+        classNames={{
+          cover: styles.productCardCover,
+          body: styles.productCardBody,
+        }}
         className={styles.productCard}
         cover={
           loading ? (
-            <Skeleton.Image className={styles.skeletonImage} />
+            <Skeleton.Image className={styles.skeletonImage} active />
           ) : (
             <ImageDisplay images={product.images} mode={ImageMode.SINGLE} />
           )
@@ -74,8 +47,12 @@ function ProductCard({ product, loading }: ProductCardProps) {
           loading
             ? []
             : [
-                <Button key="showDetails" onClick={showProductDetailsModal}>
-                  Show Details
+                <Button
+                  key="showDetails"
+                  type="text"
+                  onClick={showProductDetailsModal}
+                >
+                  Details
                 </Button>,
                 <Tooltip
                   key="addToCart"
@@ -83,14 +60,14 @@ function ProductCard({ product, loading }: ProductCardProps) {
                   arrow={false}
                 >
                   <Button
+                    type="text"
+                    icon={<PlusCircleOutlined size={30} />}
                     onClick={(event) => {
                       event.stopPropagation();
                       addToCart(product);
                     }}
                     disabled={!product.stock}
-                  >
-                    Add to Cart
-                  </Button>
+                  />
                 </Tooltip>,
               ]
         }

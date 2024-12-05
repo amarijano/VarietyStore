@@ -33,7 +33,7 @@ function Cart() {
   return (
     <div className={styles.cartContainer}>
       {cartCount ? (
-        <div>
+        <>
           <h1 className={styles.cartTitle}>Shopping Cart</h1>
           <p className={styles.cartTotal}>Total Items in Cart: {cartCount}</p>
           <div className={styles.cartContent}>
@@ -78,15 +78,18 @@ function Cart() {
               </Button>
             </div>
           </div>
-        </div>
+        </>
       ) : (
-        <div className={styles.cardContainerEmpty}>
+        <div className={styles.cartContainerEmpty}>
           <h1 className={styles.cartTitle}>Your cart is empty</h1>
           <p>
             Once you add something to your cart, it will appear here. Ready to
             get started?
           </p>
-          <Button type="primary" onClick={() => navigate("/products")}>
+          <Button
+            className={styles.getStartedButton}
+            onClick={() => navigate("/products")}
+          >
             GET STARTED
           </Button>
         </div>
