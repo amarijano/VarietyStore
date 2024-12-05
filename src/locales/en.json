@@ -1,0 +1,87 @@
+{
+  "cart": {
+    "title": "Shopping Cart",
+    "total": "Total Items in Cart: {{count}}",
+    "button": {
+      "continueShopping": "Continue Shopping",
+      "emptyCart": "Empty Cart"
+    },
+    "totalAmount": "Total Amount",
+    "goToCheckout": "Go to Checkout",
+    "cartEmpty": {
+      "title": "Your cart is empty",
+      "description": "Once you add something to your cart, it will appear here. Ready to get started?",
+      "button": "GET STARTED"
+    }
+  },
+  "cartListItem": {
+    "label": {
+      "price": "PRICE",
+      "quantity": "QUANTITY",
+      "total": "TOTAL"
+    }
+  },
+  "filter": {
+    "label": {
+      "category": "Category",
+      "all": "All Categories",
+      "price": "Price Range"
+    },
+    "minPlaceholder": "Min",
+    "maxPlaceholder": "Max",
+    "applyButton": "Apply"
+  },
+  "header": {
+    "searchPlaceholder": "Search products...",
+    "logoButton": "Variety shop",
+    "cartButton": "CART"
+  },
+  "headerProfile": {
+    "logoutConfirmation": "Are you sure you want to log out?",
+    "logoutButton": "Log out",
+    "userButton": "USER"
+  },
+  "imageDisplay": {
+    "placeholder": "No image available"
+  },
+  "productCard": {
+    "detailsButton": "Details",
+    "outOfStock": "Out of stock"
+  },
+  "productDetailsModal": {
+    "addToCart": "Add to Cart",
+    "outOfStock": "Out of stock",
+    "rateText": "{{count}} review",
+    "rateText_other": "{{count}} reviews"
+  },
+  "search": {
+    "placeholder": "Search products..."
+  },
+  "loginView": {
+    "loginSuccess": "Login successful",
+    "loginFailed": "Login failed",
+    "loginTitle": "Login",
+    "loginButton": "Log in",
+    "continueShopping": "Continue shopping as guest",
+    "usernameRequired": "Please input your username!",
+    "passwordRequired": "Please input your password!",
+    "usernamePlaceholder": "Username or Email",
+    "passwordPlaceholder": "Password",
+    "checkboxText": "Keep items in your cart after logging in"
+  },
+  "productsView": {
+    "minPriceLabel": "Min Price",
+    "maxPriceLabel": "Max Price",
+    "searchLabel": "Search",
+    "loadingText": "Loading products...",
+    "sortLabel": "Sort by:",
+    "sortOptions": {
+      "default": "Default",
+      "title-asc": "Title (A-Z)",
+      "title-desc": "Title (Z-A)",
+      "price-asc": "Price (Low-High)",
+      "price-desc": "Price (High-Low)"
+    },
+    "noProductsFound": "No products found. Try adjusting your filters."
+  }
+}

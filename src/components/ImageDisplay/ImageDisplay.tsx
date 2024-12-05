@@ -1,5 +1,6 @@
 import { Carousel, Skeleton } from "antd";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { ImageMode } from "../../constants/constants";
 import styles from "./styles.module.scss";
@@ -10,12 +11,15 @@ interface ImageDisplayProps {
 }
 
 function ImageDisplay({ images, mode }: ImageDisplayProps) {
+  const { t } = useTranslation();
   const [loadedImages, setLoadedImages] = useState<{ [key: string]: boolean }>(
     {}
   );
 
   if (!images.length) {
-    return <div className={styles.placeholder}>No image available</div>;
+    return (
+      <div className={styles.placeholder}>{t("imageDisplay.placeholder")}</div>
+    );
   }
 
   const handleImageLoad = (imageSrc: string) => {

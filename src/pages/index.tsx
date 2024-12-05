@@ -1,2 +1,2 @@
-export { default as LoginPage } from "./LoginPage/LoginPage";
+export { default as LoginView } from "./LoginView/LoginView";
 export { default as ProductsView } from "./ProductsView/ProductsView";

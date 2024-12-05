@@ -1,6 +1,7 @@
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { Button, Card, Skeleton, Tooltip } from "antd";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import { ImageMode } from "../../constants/constants";
 import { useModal } from "../../context/ModalContext";
@@ -16,6 +17,7 @@ interface ProductCardProps {
 }
 
 function ProductCard({ product, loading }: ProductCardProps) {
+  const { t } = useTranslation();
   const { Meta } = Card;
   const { showModal } = useModal();
   const { addToCart } = useCart();
@@ -52,11 +54,11 @@ function ProductCard({ product, loading }: ProductCardProps) {
                   type="text"
                   onClick={showProductDetailsModal}
                 >
-                  Details
+                  {t("productCard.detailsButton")}
                 </Button>,
                 <Tooltip
                   key="addToCart"
-                  title={!product.stock ? "Out of stock" : ""}
+                  title={!product.stock ? t("productCard.outOfStock") : ""}
                   arrow={false}
                 >
                   <Button

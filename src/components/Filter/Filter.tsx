@@ -1,6 +1,7 @@
 import { DownOutlined, FilterOutlined } from "@ant-design/icons";
 import { Button, Dropdown, InputNumber, MenuProps, Space } from "antd";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { useProductsData } from "../../hooks/useProductsData";
 import { CategoryType } from "../../types/product.types";
@@ -25,17 +26,15 @@ const Filter = ({
   onPriceChange,
   loading,
 }: FilterProps) => {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const { updateFilters, currentState } = useProductsData();
-  // Local state for price range before applying
   const [tempPriceRange, setTempPriceRange] = useState(priceRange);
 
   const handlePriceChange = (min: number | null, max: number | null) => {
-    // If min is higher than max, clear min
     if (min !== null && max !== null && min > max) {
       min = null;
     }
-    // If max is lower than min, clear max
     if (max !== null && min !== null && max < min) {
       max = null;
     }
@@ -53,11 +52,11 @@ const Filter = ({
   const items: MenuProps["items"] = [
     {
       key: "category",
-      label: "Category",
+      label: t("filter.label.category"),
       children: [
         {
           key: "all",
-          label: "All Categories",
+          label: t("filter.label.all"),
           onClick: () => {
             onCategoryChange(null);
             setOpen(false);
@@ -75,7 +74,7 @@ const Filter = ({
     },
     {
       key: "price",
-      label: "Price Range",
+      label: t("filter.label.price"),
       type: "submenu",
       children: [
         {
@@ -87,7 +86,7 @@ const Filter = ({
             >
               <Space className={styles.priceInputs}>
                 <InputNumber
-                  placeholder="Min"
+                  placeholder={t("filter.minPlaceholder")}
                   value={currentState.filters.priceRange.min}
                   onChange={(value) =>
                     handlePriceChange(
@@ -100,7 +99,7 @@ const Filter = ({
                 />
                 <span>-</span>
                 <InputNumber
-                  placeholder="Max"
+                  placeholder={t("filter.maxPlaceholder")}
                   value={currentState.filters.priceRange.max}
                   onChange={(value) =>
                     handlePriceChange(
@@ -117,7 +116,7 @@ const Filter = ({
                 onClick={handleApplyPrice}
                 className={styles.applyButton}
               >
-                Apply
+                {t("filter.applyButton")}
               </Button>
             </div>
           ),
@@ -149,7 +148,7 @@ const Filter = ({
       onOpenChange={setOpen}
       destroyPopupOnHide
     >
-      <Button icon={<FilterOutlined />} loading={loading}>
+      <Button type="text" icon={<FilterOutlined />} loading={loading}>
         Filters <DownOutlined />
       </Button>
     </Dropdown>

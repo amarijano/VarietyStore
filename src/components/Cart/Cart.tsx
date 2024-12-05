@@ -1,7 +1,9 @@
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { Button } from "antd";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
+import { AppRoute } from "../../constants/constants";
 import { useModal } from "../../context/ModalContext";
 import { useCart } from "../../hooks/useCart";
 import { CartItem, Product } from "../../types/product.types";
@@ -10,6 +12,7 @@ import CartListItem from "../CartListItem/CartListItem";
 import styles from "./styles.module.scss";
 
 function Cart() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { showModal } = useModal();
   const {
@@ -21,11 +24,10 @@ function Cart() {
   } = useCart();
 
   function convertCartItemToProduct(cartItem: CartItem): Product {
-    const { quantity, ...product } = cartItem; // Destructure to omit quantity
-    return product; // Return the remaining properties as a Product
+    const { quantity, ...product } = cartItem;
+    return product;
   }
 
-  // Calculate total amount
   const totalAmount = cartItems.reduce((total, item) => {
     return total + item.price * item.quantity;
   }, 0);
@@ -34,8 +36,10 @@ function Cart() {
     <div className={styles.cartContainer}>
       {cartCount ? (
         <>
-          <h1 className={styles.cartTitle}>Shopping Cart</h1>
-          <p className={styles.cartTotal}>Total Items in Cart: {cartCount}</p>
+          <h1 className={styles.cartTitle}>{t("cart.title")}</h1>
+          <p className={styles.cartTotal}>
+            {t("cart.total", { count: cartCount })}
+          </p>
           <div className={styles.cartContent}>
             <div className={styles.cartContentLeft}>
               <ul>
@@ -59,38 +63,35 @@ function Cart() {
                 <Button
                   type="text"
                   icon={<ArrowLeftOutlined />}
-                  onClick={() => navigate("/products")}
+                  onClick={() => navigate(AppRoute.BASE)}
                 >
-                  CONTINUE SHOPPING
+                  {t("cart.button.continueShopping")}
                 </Button>
                 <Button type="default" onClick={() => removeFromCart()}>
-                  Empty Cart
+                  {t("cart.button.emptyCart")}
                 </Button>
               </div>
             </div>
             <div className={styles.cartSummary}>
               <div>
-                <h2>Total Amount</h2>
+                <h2>{t("cart.totalAmount")}</h2>
                 <Price amount={totalAmount} />
               </div>
               <Button type="primary" disabled>
-                Go to Checkout
+                {t("cart.button.goToCheckout")}
               </Button>
             </div>
           </div>
         </>
       ) : (
         <div className={styles.cartContainerEmpty}>
-          <h1 className={styles.cartTitle}>Your cart is empty</h1>
-          <p>
-            Once you add something to your cart, it will appear here. Ready to
-            get started?
-          </p>
+          <h1 className={styles.cartTitle}>{t("cart.cartEmpty.title")}</h1>
+          <p>{t("cart.cartEmpty.description")}</p>
           <Button
             className={styles.getStartedButton}
-            onClick={() => navigate("/products")}
+            onClick={() => navigate(AppRoute.BASE)}
           >
-            GET STARTED
+            {t("cart.cartEmpty.button")}
           </Button>
         </div>
       )}

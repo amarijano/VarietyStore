@@ -5,20 +5,16 @@
   gap: 24px;
   padding: 24px;
 
-  // Mobile first approach
   grid-template-columns: 1fr;
 
-  // Tablet (minimum 768px)
   @media (min-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  // Small desktop (minimum 1024px)
   @media (min-width: 1024px) {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  // Large desktop (minimum 1440px)
   @media (min-width: 1440px) {
     grid-template-columns: repeat(4, 1fr);
   }

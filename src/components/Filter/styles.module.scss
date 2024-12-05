@@ -1,12 +1,10 @@
 .filterMenu {
   min-width: 200px;
+}
 
-  :global {
-    .ant-dropdown-menu-sub {
-      max-height: 300px;
-      overflow-y: auto;
-    }
-  }
+[class~="ant-dropdown-menu-sub"] {
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .priceMenuItem {
@@ -24,12 +22,6 @@
   display: flex;
   align-items: center;
   gap: 8px;
-
-  :global {
-    .ant-input-number {
-      width: 100px;
-    }
-  }
 }
 
 .applyButton {

@@ -2,6 +2,7 @@ import { ShoppingCartOutlined, ShopTwoTone } from "@ant-design/icons";
 import { Badge, Button, Input, Space } from "antd";
 import { Header as HeaderComponent } from "antd/es/layout/layout";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { AppRoute } from "../../constants/constants";
@@ -10,6 +11,7 @@ import { HeaderButton, HeaderProfile } from "..";
 import styles from "./styles.module.scss";
 
 function Header() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { cartCount } = useCart();
   const [searchParams] = useSearchParams();
@@ -32,7 +34,6 @@ function Header() {
     }
     newParams.set("page", "1"); // Reset to first page when searching
 
-    // Navigate to products page with search params
     navigate({
       pathname: AppRoute.BASE,
       search: newParams.toString(),
@@ -50,12 +51,12 @@ function Header() {
           className={styles.logoButton}
           onClick={handleLogoClick}
         >
-          Variety shop
+          {t("header.logoButton")}
         </Button>
       </div>
       <Input.Search
         className={styles.headerSearch}
-        placeholder="Search products..."
+        placeholder={t("header.searchPlaceholder")}
         allowClear
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
@@ -67,7 +68,7 @@ function Header() {
           <HeaderButton
             icon={<ShoppingCartOutlined />}
             onClick={handleCartClick}
-            text="CART"
+            text={t("header.cartButton")}
           />
         </Badge>
       </Space>

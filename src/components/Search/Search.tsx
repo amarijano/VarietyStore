@@ -1,5 +1,5 @@
 import { Input } from "antd";
-
+import { useTranslation } from "react-i18next";
 export interface SearchProps {
   onSearch: () => void;
   onClear: () => void;
@@ -8,16 +8,16 @@ export interface SearchProps {
 }
 
 function Search({ className, onSearch, onClear, value }: SearchProps) {
+  const { t } = useTranslation();
   const { Search } = Input;
 
   return (
     <div className={className}>
       <Search
-        placeholder="Search for products"
+        placeholder={t("search.placeholder")}
         allowClear
         value={value}
         onSearch={onSearch}
-        onChange={(event) => console.log(event.target.value)}
         onClear={onClear}
       />
     </div>

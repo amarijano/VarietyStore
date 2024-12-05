@@ -1,5 +1,6 @@
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Dropdown, MenuProps, Tooltip } from "antd";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import { AppRoute } from "../../constants/constants";
@@ -8,6 +9,7 @@ import HeaderButton from "../HeaderButton/HeaderButton";
 import styles from "./styles.module.scss";
 
 function HeaderProfile() {
+  const { t } = useTranslation();
   const { isLoggedIn, logout, user } = useAuth();
   const navigate = useNavigate();
 
@@ -19,14 +21,14 @@ function HeaderProfile() {
     {
       key: 1,
       type: "item",
-      label: "Are you sure you want to log out?",
+      label: t("headerProfile.logoutConfirmation"),
     },
     {
       key: 2,
       type: "item",
       label: (
         <Button type="primary" onClick={logout}>
-          Log out
+          {t("headerProfile.logoutButton")}
         </Button>
       ),
     },
@@ -44,21 +46,10 @@ function HeaderProfile() {
       </Tooltip>
     </Dropdown>
   ) : (
-    // <div className={styles.userButtonContainer}>
-    //   <Button
-    //     className={styles.userButton}
-    //     type="link"
-    //     icon={<UserOutlined />}
-    //     size="large"
-    //     onClick={handleLoginClick}
-    //   >
-    //     <span className={styles.userText}>USER</span>
-    //   </Button>
-    // </div>
     <HeaderButton
       icon={<UserOutlined />}
       onClick={handleLoginClick}
-      text="USER"
+      text={t("headerProfile.userButton")}
     />
   );
 }
