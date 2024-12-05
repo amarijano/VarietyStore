@@ -1,6 +1,14 @@
-import { FloatButton, InputNumber, Pagination, Select, Space } from "antd";
+import {
+  Empty,
+  FloatButton,
+  InputNumber,
+  Pagination,
+  Select,
+  Space,
+  Spin,
+} from "antd";
 
-import { FilterChip, ProductGrid } from "../../components";
+import { Filter, FilterChip, ProductGrid } from "../../components";
 import {
   ALL_CATEGORIES_VALUE,
   FilterTypes,
@@ -25,6 +33,7 @@ function ProductsView() {
   } = useProductsData();
 
   const { categories = [], loading: categoriesLoading } = useProductsContext();
+  console.log(loading, categoriesLoading, "loading", "categoriesLoading");
 
   // Ensure the selected category is valid
   const validCategory = categories?.some(
@@ -115,109 +124,151 @@ function ProductsView() {
 
   return (
     <div className={styles.homePageContainer}>
-      <div className={styles.controls}>
-        <Space size="large">
-          <Space align="center">
-            <span>Category:</span>
-            <Select
-              value={validCategory || ALL_CATEGORIES_VALUE}
-              onChange={(value) =>
-                updateFilters({
-                  category: value === ALL_CATEGORIES_VALUE ? null : value,
-                })
-              }
-              style={{ width: 200 }}
-              loading={categoriesLoading}
-            >
-              <Select.Option value={ALL_CATEGORIES_VALUE}>
-                All Categories
-              </Select.Option>
-              {categories.map((category) => (
-                <Select.Option key={category.slug} value={category.slug}>
-                  {category.name}
-                </Select.Option>
-              ))}
-            </Select>
-          </Space>
-
-          <Space align="center">
-            <span>Price:</span>
-            <InputNumber
-              placeholder="Min"
-              value={currentState.filters.priceRange.min}
-              onChange={(value) =>
-                handlePriceChange(value, currentState.filters.priceRange.max)
-              }
-              min={0}
-              max={currentState.filters.priceRange.max || undefined}
-              style={{ width: 100 }}
-            />
-            <span>-</span>
-            <InputNumber
-              placeholder="Max"
-              value={currentState.filters.priceRange.max}
-              onChange={(value) =>
-                handlePriceChange(currentState.filters.priceRange.min, value)
-              }
-              min={currentState.filters.priceRange.min || 0}
-              style={{ width: 100 }}
-            />
-          </Space>
-
-          <Space align="center">
-            <span>Sort by:</span>
-            <Select
-              value={validSort}
-              onChange={handleSortChange}
-              style={{ width: 180 }}
-            >
-              {Object.values(SortOptions).map((option) => (
-                <Select.Option key={option} value={option}>
-                  {/* {t(`sort.options.${option}`)} */}
-                  {option}
-                </Select.Option>
-              ))}
-            </Select>
-          </Space>
-        </Space>
-      </div>
-
-      {filterChips.some((chip) => chip.value) && (
-        <div className={styles.activeFilters}>
-          <Space size="small" wrap>
-            {filterChips.map(
-              ({ type, label, value, onClose }) =>
-                value && (
-                  <FilterChip
-                    key={type}
-                    label={label}
-                    value={value}
-                    onClose={onClose}
-                  />
-                )
-            )}
-          </Space>
+      {loading ? (
+        <div className={styles.loadingContainer}>
+          <Spin size="large" fullscreen tip="Loading products..." />
         </div>
+      ) : (
+        <>
+          <div className={styles.controls}>
+            <Space size="large">
+              <Filter
+                categories={categories}
+                selectedCategory={currentState.filters.category}
+                priceRange={currentState.filters.priceRange}
+                onCategoryChange={(category) => updateFilters({ category })}
+                onPriceChange={(min, max) =>
+                  updateFilters({
+                    priceRange: { min, max },
+                  })
+                }
+                loading={loading || categoriesLoading}
+              />
+
+              <Space align="center">
+                <span>Category:</span>
+                <Select
+                  value={validCategory || ALL_CATEGORIES_VALUE}
+                  onChange={(value) =>
+                    updateFilters({
+                      category: value === ALL_CATEGORIES_VALUE ? null : value,
+                    })
+                  }
+                  style={{ width: 200 }}
+                  loading={categoriesLoading}
+                >
+                  <Select.Option value={ALL_CATEGORIES_VALUE}>
+                    All Categories
+                  </Select.Option>
+                  {categories.map((category) => (
+                    <Select.Option key={category.slug} value={category.slug}>
+                      {category.name}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Space>
+
+              <Space align="center">
+                <span>Price:</span>
+                <InputNumber
+                  placeholder="Min"
+                  value={currentState.filters.priceRange.min}
+                  onChange={(value) =>
+                    handlePriceChange(
+                      value,
+                      currentState.filters.priceRange.max
+                    )
+                  }
+                  min={0}
+                  max={currentState.filters.priceRange.max || undefined}
+                  style={{ width: 100 }}
+                />
+                <span>-</span>
+                <InputNumber
+                  placeholder="Max"
+                  value={currentState.filters.priceRange.max}
+                  onChange={(value) =>
+                    handlePriceChange(
+                      currentState.filters.priceRange.min,
+                      value
+                    )
+                  }
+                  min={currentState.filters.priceRange.min || 0}
+                  style={{ width: 100 }}
+                />
+              </Space>
+
+              <Space align="center">
+                <span>Sort by:</span>
+                <Select
+                  value={validSort}
+                  onChange={handleSortChange}
+                  style={{ width: 180 }}
+                >
+                  {Object.values(SortOptions).map((option) => (
+                    <Select.Option key={option} value={option}>
+                      {/* {t(`sort.options.${option}`)} */}
+                      {option}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Space>
+            </Space>
+          </div>
+
+          {filterChips.some((chip) => chip.value) && (
+            <div className={styles.activeFilters}>
+              <Space size="small" wrap>
+                {filterChips.map(
+                  ({ type, label, value, onClose }) =>
+                    value && (
+                      <FilterChip
+                        key={type}
+                        label={label}
+                        value={value}
+                        onClose={onClose}
+                      />
+                    )
+                )}
+              </Space>
+            </div>
+          )}
+
+          <div className={styles.homePageContent}>
+            {!products.length ? (
+              <Empty
+                className={styles.emptyProducts}
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                description={
+                  <span className={styles.emptyText}>
+                    No products found. Try adjusting your filters.
+                  </span>
+                }
+              />
+            ) : (
+              <ProductGrid products={products} loading={loading} />
+            )}
+          </div>
+
+          <FloatButton.BackTop visibilityHeight={600} />
+
+          <Pagination
+            align="end"
+            current={currentState.pagination.page}
+            pageSize={currentState.pagination.limit}
+            total={totalItems}
+            showTotal={(total, range) =>
+              `${range[0]}-${range[1]} of ${total} items`
+            }
+            onChange={(page, pageSize) => {
+              updatePagination(page, pageSize);
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            showSizeChanger
+            pageSizeOptions={VALID_PAGE_SIZES}
+          />
+        </>
       )}
-
-      <div className={styles.homePageContent}>
-        <ProductGrid products={products} loading={loading} />
-      </div>
-
-      <FloatButton.BackTop visibilityHeight={600} />
-
-      <Pagination
-        align="end"
-        current={currentState.pagination.page}
-        pageSize={currentState.pagination.limit}
-        total={totalItems}
-        showTotal={(total, range) =>
-          `${range[0]}-${range[1]} of ${total} items`
-        }
-        onChange={(page, pageSize) => updatePagination(page, pageSize)}
-        showSizeChanger
-        pageSizeOptions={VALID_PAGE_SIZES}
-      />
     </div>
   );
 }

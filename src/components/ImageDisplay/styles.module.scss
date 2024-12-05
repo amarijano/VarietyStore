@@ -21,12 +21,12 @@
   }
 
   [class~="slick-dots-bottom"] {
-    bottom: -6px;
+    bottom: -16px;
   }
 
   [class~="slick-list"] {
     height: 100%;
-    margin: 24px;
+    margin: 24px 48px;
     > div {
       height: 100%;
       > div {
@@ -50,4 +50,13 @@
   height: 100%;
   width: 100%;
   object-fit: contain;
+}
+
+.skeletonImage {
+  width: 100% !important;
+  height: 100%;
+
+  > div {
+    height: 100% !important;
+  }
 }

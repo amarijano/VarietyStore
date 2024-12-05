@@ -23,4 +23,8 @@
 .headerMenu {
   justify-content: flex-end;
   padding-right: 15px;
+
+  [class~="ant-badge-count"] {
+    background: #1677ff;
+  }
 }
