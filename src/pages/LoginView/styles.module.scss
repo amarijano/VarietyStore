@@ -1,18 +1,21 @@
 .loginForm {
   &Container {
-    display: grid;
+    min-height: calc(100vh - 64px);
+    display: flex;
+    flex-direction: column;
   }
   &Wrapper {
     background-color: #f5f5f5;
     justify-self: center;
-    padding-top: 40px;
+    flex: 1;
+    align-content: center;
+    justify-items: center;
   }
   &Card {
-    padding: 40px;
+    padding: 24px;
     background: white;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
     max-width: 400px;
   }
   &Title {

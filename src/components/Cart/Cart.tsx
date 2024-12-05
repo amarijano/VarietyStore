@@ -42,7 +42,7 @@ function Cart() {
           </p>
           <div className={styles.cartContent}>
             <div className={styles.cartContentLeft}>
-              <ul>
+              <ul className={styles.cartList}>
                 {cartItems.map((item) => (
                   <CartListItem
                     key={item.id}
@@ -78,7 +78,7 @@ function Cart() {
                 <Price amount={totalAmount} />
               </div>
               <Button type="primary" disabled>
-                {t("cart.button.goToCheckout")}
+                {t("cart.goToCheckout")}
               </Button>
             </div>
           </div>

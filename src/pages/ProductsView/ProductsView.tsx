@@ -115,11 +115,7 @@ function ProductsView() {
             />
             <Space>
               <span>{t("productsView.sortLabel")}</span>
-              <Select
-                value={validSort}
-                onChange={handleSortChange}
-                style={{ width: 180 }}
-              >
+              <Select value={validSort} onChange={handleSortChange}>
                 {Object.values(SortOptions).map((option) => (
                   <Select.Option key={option} value={option}>
                     {t(`productsView.sortOptions.${option}`)}

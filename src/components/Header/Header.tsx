@@ -51,7 +51,7 @@ function Header() {
           className={styles.logoButton}
           onClick={handleLogoClick}
         >
-          {t("header.logoButton")}
+          <span className={styles.logoText}>{t("header.logoButton")}</span>
         </Button>
       </div>
       <Input.Search

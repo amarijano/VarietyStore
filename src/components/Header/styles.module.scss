@@ -1,4 +1,5 @@
 @use "../../scss/variables.scss" as *;
+@use "../../scss/screenBreakpoints.scss" as *;
 
 .header {
   width: 100%;
@@ -26,5 +27,45 @@
 
   [class~="ant-badge-count"] {
     background: #1677ff;
+  }
+}
+
+.headerLogo {
+  .logoText {
+    color: white;
+  }
+}
+
+.headerSearch {
+  > span {
+    max-width: 500px;
+  }
+}
+
+@include tablet {
+  .header {
+    padding: 6px 12px;
+
+    &Search {
+      justify-items: center;
+
+      > span {
+        max-width: 200px;
+      }
+    }
+
+    .logoText {
+      font-size: 20px;
+    }
+  }
+}
+
+@include mobile {
+  .header {
+    padding: 6px 12px;
+
+    .logoText {
+      display: none;
+    }
   }
 }

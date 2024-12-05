@@ -1,4 +1,5 @@
 @use "../../scss/variables.scss" as *;
+@use "../../scss/screenBreakpoints.scss" as *;
 
 .homePageContainer {
   display: flex;
@@ -42,6 +43,10 @@
   display: flex;
   justify-content: space-between;
   flex-shrink: 0;
+
+  [class~="ant-select"] {
+    width: 140px;
+  }
 }
 
 .activeFilters {
@@ -52,5 +57,11 @@
   [class~="ant-spin-text"] {
     font-size: $font-size-xl;
     padding-top: 16px;
+  }
+}
+
+@include mobile {
+  .homePageContainer {
+    padding: 6px 12px;
   }
 }
