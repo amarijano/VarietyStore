@@ -1,6 +1,5 @@
 import { DeleteOutlined } from "@ant-design/icons";
 import { Button, InputNumber } from "antd";
-import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import { ImageMode } from "../../constants/constants";
@@ -16,12 +15,12 @@ interface CartListItemProps {
   onCartListItemClick: () => void;
 }
 
-const CartListItem: React.FC<CartListItemProps> = ({
+function CartListItem({
   item,
   onQuantityChange,
   deleteItem,
   onCartListItemClick,
-}) => {
+}: CartListItemProps) {
   const { t } = useTranslation();
   const handleQuantityChange = (value: number | null) => {
     if (value !== null) {
@@ -30,7 +29,7 @@ const CartListItem: React.FC<CartListItemProps> = ({
   };
   const { isMobile } = useScreenSize();
 
-  const cartListItemMobile = useMemo(() => {
+  function cartListItemMobile() {
     return (
       <li className={styles.cartListItem} onClick={onCartListItemClick}>
         <div className={styles.cartListItemDetailsMobileContainer}>
@@ -87,9 +86,9 @@ const CartListItem: React.FC<CartListItemProps> = ({
         </div>
       </li>
     );
-  }, [isMobile]);
+  }
 
-  const cartListItemDesktop = useMemo(() => {
+  function cartListItemDesktop() {
     return (
       <li className={styles.cartListItem} onClick={onCartListItemClick}>
         <Button className={styles.thumbnailButton}>
@@ -142,9 +141,9 @@ const CartListItem: React.FC<CartListItemProps> = ({
         </Button>
       </li>
     );
-  }, [isMobile]);
+  }
 
-  return isMobile ? cartListItemMobile : cartListItemDesktop;
-};
+  return isMobile ? cartListItemMobile() : cartListItemDesktop();
+}
 
 export default CartListItem;
