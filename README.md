@@ -1,6 +1,6 @@
 ## Zadatak
 
-SPA koja prikazuje katalog proizvoda s naprednim mogućnostima filtriranja i sortiranja
+SPA showing a product catalogue with advanced sorting and filtering
 
 ### Table of Contents
 
