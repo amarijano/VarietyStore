@@ -1,4 +1,4 @@
-## Zadatak
+## Task
 
 SPA showing a product catalogue with advanced sorting and filtering
 
