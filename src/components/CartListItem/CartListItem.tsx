@@ -1,6 +1,6 @@
 import { DeleteOutlined } from "@ant-design/icons";
 import { Button, InputNumber } from "antd";
-import React, { useMemo } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 
 import { ImageMode } from "../../constants/constants";
@@ -16,32 +16,40 @@ interface CartListItemProps {
   onCartListItemClick: () => void;
 }
 
-const CartListItem: React.FC<CartListItemProps> = ({
-  item,
+function CartListItem({
+  item: { id, price, quantity, title, brand, returnPolicy, thumbnail, stock },
   onQuantityChange,
   deleteItem,
   onCartListItemClick,
-}) => {
+}: CartListItemProps) {
   const { t } = useTranslation();
-  const handleQuantityChange = (value: number | null) => {
-    if (value !== null) {
-      onQuantityChange(item.id, value);
-    }
-  };
   const { isMobile } = useScreenSize();
 
-  const cartListItemMobile = useMemo(() => {
+  const handleQuantityChange = (value: number | null) => {
+    if (value !== null) {
+      onQuantityChange(id, value);
+    }
+  };
+
+  const handleDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    deleteItem(id);
+  };
+
+  const totalPrice = price * quantity;
+
+  function cartListItemMobile() {
     return (
       <li className={styles.cartListItem} onClick={onCartListItemClick}>
         <div className={styles.cartListItemDetailsMobileContainer}>
           <Button className={styles.thumbnailButton}>
-            <ImageDisplay images={[item.thumbnail]} mode={ImageMode.SINGLE} />
+            <ImageDisplay images={[thumbnail]} mode={ImageMode.SINGLE} />
           </Button>
           <div className={styles.cartListItemDetails}>
-            <h4>{item.title}</h4>
-            {item.brand && <p>{item.brand}</p>}
+            <h4>{title}</h4>
+            {brand && <p>{brand}</p>}
             <div className={styles.cartListItemDetailsReturnPolicy}>
-              {item.returnPolicy}
+              {returnPolicy}
             </div>
           </div>
         </div>
@@ -50,7 +58,7 @@ const CartListItem: React.FC<CartListItemProps> = ({
             <label className={styles.label}>
               {t("cartListItem.label.price")}
             </label>
-            <Price amount={item.price} isLight />
+            <Price amount={price} isLight />
           </div>
           <div
             className={styles.cartListItemQuantityContainer}
@@ -61,11 +69,10 @@ const CartListItem: React.FC<CartListItemProps> = ({
             </label>
             <InputNumber
               min={1}
-              defaultValue={item.quantity}
+              value={quantity}
               onChange={handleQuantityChange}
               className={styles.quantityInput}
-              value={item.quantity}
-              max={item.stock}
+              max={stock}
               size="small"
             />
           </div>
@@ -73,40 +80,34 @@ const CartListItem: React.FC<CartListItemProps> = ({
             <label className={styles.label}>
               {t("cartListItem.label.total")}
             </label>
-            <Price amount={item.price * item.quantity} isLight />
+            <Price amount={totalPrice} isLight />
           </div>
-          <Button
-            onClick={(event) => {
-              event.stopPropagation();
-              deleteItem(item.id);
-            }}
-            className={styles.cartDeleteButton}
-          >
+          <Button onClick={handleDelete} className={styles.cartDeleteButton}>
             <DeleteOutlined />
           </Button>
         </div>
       </li>
     );
-  }, [isMobile]);
+  }
 
-  const cartListItemDesktop = useMemo(() => {
+  function cartListItemDesktop() {
     return (
       <li className={styles.cartListItem} onClick={onCartListItemClick}>
         <Button className={styles.thumbnailButton}>
-          <ImageDisplay images={[item.thumbnail]} mode={ImageMode.SINGLE} />
+          <ImageDisplay images={[thumbnail]} mode={ImageMode.SINGLE} />
         </Button>
         <div className={styles.cartListItemDetails}>
-          <h4>{item.title}</h4>
-          {item.brand && <p>{item.brand}</p>}
+          <h4>{title}</h4>
+          {brand && <p>{brand}</p>}
           <div className={styles.cartListItemDetailsReturnPolicy}>
-            {item.returnPolicy}
+            {returnPolicy}
           </div>
         </div>
         <div className={styles.cartListItemPriceContainer}>
           <label className={styles.label}>
             {t("cartListItem.label.price")}
           </label>
-          <Price amount={item.price} isLight />
+          <Price amount={price} isLight />
         </div>
         <div
           className={styles.cartListItemQuantityContainer}
@@ -117,11 +118,10 @@ const CartListItem: React.FC<CartListItemProps> = ({
           </label>
           <InputNumber
             min={1}
-            defaultValue={item.quantity}
+            value={quantity}
             onChange={handleQuantityChange}
             className={styles.quantityInput}
-            value={item.quantity}
-            max={item.stock}
+            max={stock}
             size="small"
           />
         </div>
@@ -129,22 +129,16 @@ const CartListItem: React.FC<CartListItemProps> = ({
           <label className={styles.label}>
             {t("cartListItem.label.total")}
           </label>
-          <Price amount={item.price * item.quantity} isLight />
+          <Price amount={totalPrice} isLight />
         </div>
-        <Button
-          onClick={(event) => {
-            event.stopPropagation();
-            deleteItem(item.id);
-          }}
-          className={styles.cartDeleteButton}
-        >
+        <Button onClick={handleDelete} className={styles.cartDeleteButton}>
           <DeleteOutlined />
         </Button>
       </li>
     );
-  }, [isMobile]);
+  }
 
-  return isMobile ? cartListItemMobile : cartListItemDesktop;
-};
+  return isMobile ? cartListItemMobile() : cartListItemDesktop();
+}
 
 export default CartListItem;
